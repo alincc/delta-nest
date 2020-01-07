@@ -1,14 +1,14 @@
-import { Module } from '@nestjs/common';
-import { ServicesModule } from 'src/services/services.module';
-import { PassportModule } from '@nestjs/passport';
-import { LocalUserStrategy } from '../guards/local-user.strategy';
-import { JwtUserStrategy } from '../guards/jwt-user.strategy';
-import { AuthService } from 'src/auth/auth.service';
-import { AuthController } from './auth.controller';
-import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
-import { LocalSchoolStrategy } from '../guards/local-school.strategy';
-import { JwtSchoolStrategy } from '../guards/jwt-school.strategy';
+import { Module } from "@nestjs/common";
+import { ServicesModule } from "src/services/services.module";
+import { PassportModule } from "@nestjs/passport";
+import { AuthService } from "src/auth/auth.service";
+import { AuthController } from "./auth.controller";
+import { JwtModule } from "@nestjs/jwt";
+import { jwtConstants } from "./constants";
+import { LocalStudentStrategy } from "src/guards/local-student.strategy";
+import { JwtStudentStrategy } from "src/guards/jwt-student.strategy";
+import { JwtPrincipalStrategy } from "src/guards/jwt-principal.strategy";
+import { LocalPrincipalStrategy } from "src/guards/local-principal.strategy";
 
 @Module({
   imports: [
@@ -16,23 +16,23 @@ import { JwtSchoolStrategy } from '../guards/jwt-school.strategy';
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '1d' },
-    }),
+      signOptions: { expiresIn: "1d" }
+    })
   ],
   providers: [
     AuthService,
-    LocalUserStrategy,
-    JwtUserStrategy,
-    LocalSchoolStrategy,
-    JwtSchoolStrategy,
+    LocalStudentStrategy,
+    JwtStudentStrategy,
+    LocalPrincipalStrategy,
+    JwtPrincipalStrategy
   ],
   exports: [
     AuthService,
-    LocalUserStrategy,
-    JwtUserStrategy,
-    LocalSchoolStrategy,
-    JwtSchoolStrategy,
+    LocalStudentStrategy,
+    JwtStudentStrategy,
+    LocalPrincipalStrategy,
+    JwtPrincipalStrategy
   ],
-  controllers: [AuthController],
+  controllers: [AuthController]
 })
 export class AuthModule {}

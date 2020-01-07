@@ -1,11 +1,11 @@
-import { Injectable, Inject } from '@nestjs/common';
-import { Payment } from 'src/database/models/payment.model';
+import { Injectable, Inject } from "@nestjs/common";
+import { Payment } from "src/database/models/payment.model";
 
 @Injectable()
-export class PaymentsService {
+export class PaymentService {
   constructor(
-    @Inject('PAYMENTS_REPOSITORY')
-    private readonly paymentRepository: typeof Payment,
+    @Inject("PAYMENTS_REPOSITORY")
+    private readonly paymentRepository: typeof Payment
   ) {}
 
   async findAll(): Promise<Payment[]> {

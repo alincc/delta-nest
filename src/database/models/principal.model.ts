@@ -1,19 +1,19 @@
-import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
-import { School } from './school.model';
+import { Table, Column, Model, DataType, HasMany } from "sequelize-typescript";
+import { School } from "./school.model";
 
 @Table
 export class Principal extends Model<Principal> {
   @Column({
     type: DataType.CHAR,
     defaultValue: DataType.UUIDV4,
-    primaryKey: true,
+    primaryKey: true
   })
   _id?: string;
 
   @Column({
     type: DataType.CHAR,
     allowNull: false,
-    unique: true,
+    unique: true
   })
   username: string;
 
@@ -29,9 +29,9 @@ export class Principal extends Model<Principal> {
   @Column(DataType.CHAR)
   phone: string;
 
-  @Column(DataType.TEXT)
-  profilePicture: string;
+  @Column(DataType.CHAR)
+  avatarUrl: string;
 
-  @HasMany(() => School, 'schools')
+  @HasMany(() => School, "schools")
   schools: School[];
 }

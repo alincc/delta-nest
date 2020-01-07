@@ -1,13 +1,13 @@
-import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
-import { Student } from './student.model';
-import { Principal } from './principal.model';
+import { Table, Column, Model, DataType, HasMany } from "sequelize-typescript";
+import { Student } from "./student.model";
+import { Principal } from "./principal.model";
 
 @Table
 export class Flight extends Model<Flight> {
   @Column({
     type: DataType.CHAR,
     defaultValue: DataType.UUIDV4,
-    primaryKey: true,
+    primaryKey: true
   })
   _id?: string;
 
@@ -29,9 +29,9 @@ export class Flight extends Model<Flight> {
   @Column(DataType.BOOLEAN)
   isPaid: boolean;
 
-  @HasMany(() => Student, 'pilots')
+  @HasMany(() => Student, "pilots")
   pilots: Student[];
 
-  @HasMany(() => Principal, 'principal')
+  @HasMany(() => Principal, "principal")
   principal: Principal[];
 }

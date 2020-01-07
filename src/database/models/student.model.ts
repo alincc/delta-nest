@@ -1,20 +1,20 @@
-import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
-import { Payment } from './payment.model';
-import { Grade } from './grade.model';
+import { Table, Column, Model, DataType, HasMany } from "sequelize-typescript";
+import { Payment } from "./payment.model";
+import { Grade } from "./grade.model";
 
 @Table
 export class Student extends Model<Student> {
   @Column({
     type: DataType.CHAR,
     defaultValue: DataType.UUIDV4,
-    primaryKey: true,
+    primaryKey: true
   })
   _id?: string;
 
   @Column({
     type: DataType.CHAR,
     allowNull: false,
-    unique: true,
+    unique: true
   })
   username: string;
 
@@ -30,12 +30,12 @@ export class Student extends Model<Student> {
   @Column(DataType.CHAR)
   phone: string;
 
-  @Column(DataType.TEXT)
+  @Column(DataType.CHAR)
   avatarUrl: string;
 
-  @HasMany(() => Payment, 'payments')
+  @HasMany(() => Payment, "payments")
   payments: Payment[];
 
-  @HasMany(() => Grade, 'grades')
+  @HasMany(() => Grade, "grades")
   grades: Grade[];
 }

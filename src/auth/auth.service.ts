@@ -1,17 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { StudentService } from '../services/student.service';
-import { JwtService } from '@nestjs/jwt';
-import { PrincipalService } from 'src/services/principal.service';
+import { Injectable } from "@nestjs/common";
+import { StudentService } from "../services/student.service";
+import { JwtService } from "@nestjs/jwt";
+import { PrincipalService } from "src/services/principal.service";
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly studentService: StudentService,
     private readonly principalService: PrincipalService,
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtService
   ) {}
 
-  async validateUser(username: string, password: string): Promise<any> {
+  async validateStudent(username: string, password: string): Promise<any> {
     const user = await this.studentService.findOne(username);
     if (user && user.password == password) {
       const { password, ...result } = user;
@@ -20,7 +20,7 @@ export class AuthService {
     return null;
   }
 
-  async validateSchool(username: string, password: string): Promise<any> {
+  async validatePrincipal(username: string, password: string): Promise<any> {
     const user = await this.principalService.findOne(username);
     if (user && user.password == password) {
       const { password, ...result } = user;
@@ -29,24 +29,17 @@ export class AuthService {
     return null;
   }
 
-  async loginUser(user: any) {
-    const payload = { username: user.username, sub: user.userId };
+  async loginStudent(student: any) {
+    const payload = { username: student.username, sub: student._id };
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: this.jwtService.sign(payload)
     };
   }
 
-  async loginSchool(school: any) {
-    const payload = { username: school.username, sub: school.schoolId };
+  async loginPrincipal(principal: any) {
+    const payload = { username: principal.username, sub: principal._id };
     return {
-      access_token: this.jwtService.sign(payload),
-    };
-  }
-
-  async signUpSchool(school: any) {
-    const payload = { username: school.username, sub: school.schoolId };
-    return {
-      access_token: this.jwtService.sign(payload),
+      access_token: this.jwtService.sign(payload)
     };
   }
 }

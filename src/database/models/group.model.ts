@@ -1,12 +1,12 @@
-import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
-import { Student } from './student.model';
+import { Table, Column, Model, DataType, HasMany } from "sequelize-typescript";
+import { Student } from "./student.model";
 
 @Table
 export class Group extends Model<Group> {
   @Column({
     type: DataType.CHAR,
     defaultValue: DataType.UUIDV4,
-    primaryKey: true,
+    primaryKey: true
   })
   _id?: string;
 
@@ -16,6 +16,6 @@ export class Group extends Model<Group> {
   @Column(DataType.CHAR)
   avatarUrl: string;
 
-  @HasMany(() => Student, 'students')
+  @HasMany(() => Student, "students")
   students: Student[];
 }

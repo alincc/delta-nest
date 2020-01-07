@@ -1,19 +1,22 @@
-import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany } from "sequelize-typescript";
 
-import { Grade } from './grade.model';
+import { Grade } from "./grade.model";
 
 @Table
 export class Subject extends Model<Subject> {
   @Column({
     type: DataType.CHAR,
     defaultValue: DataType.UUIDV4,
-    primaryKey: true,
+    primaryKey: true
   })
   _id?: string;
 
   @Column(DataType.CHAR)
   email: string;
 
-  @HasMany(() => Grade, 'subjectGrades')
+  @Column(DataType.CHAR)
+  avatarUrl: string;
+
+  @HasMany(() => Grade, "subjectGrades")
   grades: Grade[];
 }

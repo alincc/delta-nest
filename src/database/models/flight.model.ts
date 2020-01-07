@@ -1,36 +1,37 @@
-import {
-  Table,
-  Column,
-  Model,
-  DataType,
-  BelongsTo,
-} from 'sequelize-typescript';
-import { User } from './user.model';
-import { School } from './school.model';
+import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+import { Student } from './student.model';
+import { Principal } from './principal.model';
 
 @Table
 export class Flight extends Model<Flight> {
   @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-    unique: true,
+    type: DataType.CHAR,
+    defaultValue: DataType.UUIDV4,
     primaryKey: true,
-    autoIncrement: true,
   })
-  flightId: number;
+  _id?: string;
+
+  @Column(DataType.TEXT)
+  description: string;
 
   @Column(DataType.CHAR)
-  name: string;
+  folio: string;
 
   @Column(DataType.INTEGER)
   time: number;
 
-  @BelongsTo(() => User, 'requestedFlights')
-  requestedBy: User[];
+  @Column(DataType.INTEGER)
+  maxPilots: number;
 
-  @BelongsTo(() => User, 'approvedFlights')
-  approvedFor: User[];
+  @Column(DataType.BOOLEAN)
+  isApproved: boolean;
 
-  @BelongsTo(() => School, 'postedFlights')
-  school: School;
+  @Column(DataType.BOOLEAN)
+  isPaid: boolean;
+
+  @HasMany(() => Student, 'pilots')
+  pilots: Student[];
+
+  @HasMany(() => Principal, 'principal')
+  principal: Principal[];
 }

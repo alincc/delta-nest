@@ -1,36 +1,19 @@
-import {
-  Table,
-  Column,
-  Model,
-  DataType,
-  BelongsTo,
-} from 'sequelize-typescript';
-import { User } from './user.model';
-import { School } from './school.model';
+import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+
+import { Grade } from './grade.model';
 
 @Table
 export class Subject extends Model<Subject> {
   @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-    unique: true,
+    type: DataType.CHAR,
+    defaultValue: DataType.UUIDV4,
     primaryKey: true,
-    autoIncrement: true,
   })
-  subjectId: number;
-
-  @Column(DataType.CHAR)
-  name: string;
+  _id?: string;
 
   @Column(DataType.CHAR)
   email: string;
 
-  @Column(DataType.CHAR)
-  grade: string;
-
-  @BelongsTo(() => User, 'userStudyProgram')
-  user: User;
-
-  @BelongsTo(() => School, 'schoolSubjects')
-  school: School;
+  @HasMany(() => Grade, 'subjectGrades')
+  grades: Grade[];
 }

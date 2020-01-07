@@ -8,12 +8,6 @@ export class SchoolsService {
     private readonly schoolsRepository: typeof School,
   ) {}
 
-  async findOne(username: string): Promise<School> {
-    return await this.schoolsRepository.findOne<School>({
-      where: { username },
-    });
-  }
-
   async findAll(): Promise<School[]> {
     return await this.schoolsRepository.findAll<School>();
   }

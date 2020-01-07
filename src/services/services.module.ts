@@ -1,29 +1,35 @@
 import { Module } from '@nestjs/common';
-import { PaymentsService } from './payments.service';
-import { GroupService } from './groups.service';
-import { UsersService } from './users.service';
-import { FlightService } from './flights.service';
+import { PaymentsService } from './payment.service';
+import { GroupService } from './group.service';
+import { StudentService } from './student.service';
+import { FlightService } from './flight.service';
 import { SubjectService } from './subjects.service';
 import { DatabaseModule } from 'src/database/database.module';
 import { SchoolsService } from './schools.service';
+import { PrincipalService } from './principal.service';
+import { GradeService } from './grade.service';
 
 @Module({
   imports: [DatabaseModule],
   providers: [
-    PaymentsService,
-    GroupService,
-    UsersService,
-    SchoolsService,
     FlightService,
+    GroupService,
+    PaymentsService,
+    PrincipalService,
+    SchoolsService,
+    StudentService,
     SubjectService,
+    GradeService,
   ],
   exports: [
-    PaymentsService,
-    GroupService,
-    UsersService,
-    SchoolsService,
     FlightService,
+    GroupService,
+    PaymentsService,
+    PrincipalService,
+    SchoolsService,
+    StudentService,
     SubjectService,
+    GradeService,
   ],
 })
 export class ServicesModule {}

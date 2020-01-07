@@ -1,33 +1,43 @@
-import { User } from './user.model';
-import { Subject } from './subject.model';
-import { Payment } from './payment.model';
-import { Group } from './group.model';
-import { School } from './school.model';
 import { Flight } from './flight.model';
+import { Grade } from './grade.model';
+import { Group } from './group.model';
+import { Payment } from './payment.model';
+import { Principal } from './principal.model';
+import { School } from './school.model';
+import { Student } from './student.model';
+import { Subject } from './subject.model';
 
 export const ModelsProviders = [
   {
-    provide: 'SUBJECTS_REPOSITORY',
-    useValue: Subject,
+    provide: 'FLIGHTS_REPOSITORY',
+    useValue: Flight,
   },
   {
-    provide: 'PAYMENTS_REPOSITORY',
-    useValue: Payment,
-  },
-  {
-    provide: 'USERS_REPOSITORY',
-    useValue: User,
+    provide: 'GRADES_REPOSITORY',
+    useValue: Grade,
   },
   {
     provide: 'GROUPS_REPOSITORY',
     useValue: Group,
   },
   {
+    provide: 'PAYMENTS_REPOSITORY',
+    useValue: Payment,
+  },
+  {
+    provide: 'PRINCIPALS_REPOSITORY',
+    useValue: Principal,
+  },
+  {
     provide: 'SCHOOLS_REPOSITORY',
     useValue: School,
   },
   {
-    provide: 'FLIGHTS_REPOSITORY',
-    useValue: Flight,
+    provide: 'STUDENTS_REPOSITORY',
+    useValue: Student,
+  },
+  {
+    provide: 'SUBJECTS_REPOSITORY',
+    useValue: Subject,
   },
 ];

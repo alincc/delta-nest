@@ -1,23 +1,13 @@
-import {
-  Table,
-  Column,
-  Model,
-  DataType,
-  BelongsTo,
-} from 'sequelize-typescript';
-import { User } from './user.model';
-import { School } from './school.model';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table
 export class Payment extends Model<Payment> {
   @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-    unique: true,
+    type: DataType.CHAR,
+    defaultValue: DataType.UUIDV4,
     primaryKey: true,
-    autoIncrement: true,
   })
-  paymentId: number;
+  _id?: string;
 
   @Column(DataType.TEXT)
   description: string;
@@ -32,11 +22,5 @@ export class Payment extends Model<Payment> {
   isCash: boolean;
 
   @Column(DataType.BOOLEAN)
-  paid: boolean;
-
-  @BelongsTo(() => User, 'userPayments')
-  user: User;
-
-  @BelongsTo(() => School, 'schoolIncome')
-  school: School;
+  isPaid: boolean;
 }

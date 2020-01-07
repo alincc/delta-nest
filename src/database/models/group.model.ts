@@ -1,31 +1,21 @@
-import {
-  Table,
-  Column,
-  Model,
-  DataType,
-  BelongsTo,
-  HasMany,
-} from 'sequelize-typescript';
-import { User } from './user.model';
-import { School } from './school.model';
+import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+import { Student } from './student.model';
 
 @Table
 export class Group extends Model<Group> {
   @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-    unique: true,
+    type: DataType.CHAR,
+    defaultValue: DataType.UUIDV4,
     primaryKey: true,
-    autoIncrement: true,
   })
-  groupId: number;
+  _id?: string;
 
   @Column(DataType.CHAR)
   name: string;
 
-  @HasMany(() => User, 'groupMembers')
-  users: User[];
+  @Column(DataType.CHAR)
+  avatarUrl: string;
 
-  @BelongsTo(() => School, 'schoolGroups')
-  school: School;
+  @HasMany(() => Student, 'students')
+  students: Student[];
 }

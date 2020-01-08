@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { StudentService } from "../services/student.service";
+import { StudentService } from "../../services/student.service";
 import { JwtService } from "@nestjs/jwt";
 import { PrincipalService } from "src/services/principal.service";
 import { IStudent } from "src/interfaces/student.iterface";

@@ -9,6 +9,6 @@ export class Grade extends Model<Grade> {
   })
   _id?: string;
 
-  @Column(DataType.CHAR)
-  grade: string;
+  @Column(DataType.FLOAT)
+  grade: number;
 }

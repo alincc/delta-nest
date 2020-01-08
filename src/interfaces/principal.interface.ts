@@ -1,4 +1,6 @@
-export class ReceivePrincipalDto {
+import { ISchool } from "./school.interface";
+
+export interface IPrincipal {
   _id?: string;
   username: string;
   password: string;
@@ -6,5 +8,5 @@ export class ReceivePrincipalDto {
   email: string;
   phone: string;
   avatarUrl: string;
-  schools?: string[];
+  schools?: ISchool[] | string[];
 }

@@ -46,3 +46,26 @@ FlightSchema.pre("remove", function(next) {
       return next();
     });
 });
+
+FlightSchema.post("save", function(document: IFlight, next) {
+  return model("school")
+    .findByIdAndUpdate(document.school, {
+      $push: {
+        flights: document._id
+      }
+    })
+    .then(() => {
+      return model("user").updateMany(
+        {
+          $or: [
+            { _id: { $in: document.approved } },
+            { _id: { $in: document.authorizedBy } }
+          ]
+        },
+        { flights: document._id }
+      );
+    })
+    .then(() => {
+      return next();
+    });
+});

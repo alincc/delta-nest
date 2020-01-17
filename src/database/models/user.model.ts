@@ -67,6 +67,11 @@ UserSchema.pre("remove", function(next) {
         }
       )
       .then(() => {
+        return model("flight").deleteMany({
+          authorizedBy: Types.ObjectId(document._id)
+        });
+      })
+      .then(() => {
         return next();
       });
   } else {

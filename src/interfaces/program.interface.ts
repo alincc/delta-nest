@@ -1,17 +1,15 @@
 import { Document, Types } from "mongoose";
-import { IGrade } from "./grade.interface";
 import { ISchool } from "./school.interface";
-import { IProgram } from "./program.interface";
+import { ISubject } from "./subject.iterface";
 
-export interface ISubject extends Document {
+export interface IProgram extends Document {
   folio?: string;
   name?: string;
   description?: string;
   avatarUrl?: string;
   email?: string;
-  grades?: IGrade[] | Types.ObjectId[];
+  subjects?: ISubject[] | Types.ObjectId[];
   school?: ISchool | Types.ObjectId;
-  programs?: IProgram[] | Types.ObjectId[];
   createdAt?: number;
   updatedAt?: number;
 }

@@ -1,9 +1,16 @@
 export class ReceiveSchoolDto {
-  _id?: string;
   name: string;
-  email: string;
-  phone: string;
-  income?: string[];
+  avatarUrl?: string;
+  email?: string;
+  phone?: string;
+  flights?: string[];
+  grades?: string[];
   groups?: string[];
+  payments?: string[];
+  principals: string[];
+  programs?: string[];
+  students?: string[];
   subjects?: string[];
+  createdAt?: number;
+  updatedAt: number;
 }

@@ -1,8 +1,13 @@
 export class ReceivePaymentDto {
   _id?: string;
-  description: string;
   folio: string;
-  ammount: number;
-  isCash: boolean;
-  isPaid: boolean;
+  name: string;
+  description?: string;
+  charge: number;
+  deadLine: number;
+  completed: boolean;
+  student: string;
+  school: string;
+  createdAt?: number;
+  updatedAt: number;
 }

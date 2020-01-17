@@ -5,7 +5,6 @@ import { RoutesModule } from "./routes/routes.module";
 
 @Module({
   imports: [AuthModule, RoutesModule, ServicesModule],
-  controllers: [],
-  providers: []
+  controllers: []
 })
 export class AppModule {}

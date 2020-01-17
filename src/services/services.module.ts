@@ -4,10 +4,9 @@ import { FlightService } from "./flight.service";
 import { GradeService } from "./grade.service";
 import { GroupService } from "./group.service";
 import { PaymentService } from "./payment.service";
-import { PrincipalService } from "./principal.service";
 import { SchoolService } from "./school.service";
-import { StudentService } from "./student.service";
 import { SubjectService } from "./subject.service";
+import { UserService } from "./user.service";
 
 @Module({
   imports: [DatabaseModule],
@@ -16,20 +15,18 @@ import { SubjectService } from "./subject.service";
     GradeService,
     GroupService,
     PaymentService,
-    PrincipalService,
     SchoolService,
-    StudentService,
-    SubjectService
+    SubjectService,
+    UserService
   ],
   exports: [
     FlightService,
     GradeService,
     GroupService,
     PaymentService,
-    PrincipalService,
     SchoolService,
-    StudentService,
-    SubjectService
+    SubjectService,
+    UserService
   ]
 })
 export class ServicesModule {}

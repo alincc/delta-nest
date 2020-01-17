@@ -1,36 +1,18 @@
-import { Table, Column, Model, DataType, HasMany } from "sequelize-typescript";
-import { Payment } from "./payment.model";
-import { Group } from "./group.model";
-import { Subject } from "./subject.model";
-import { Flight } from "./flight.model";
+import { Schema } from "mongoose";
 
-@Table
-export class School extends Model<School> {
-  @Column({
-    type: DataType.CHAR,
-    defaultValue: DataType.UUIDV4,
-    primaryKey: true
-  })
-  _id?: string;
-
-  @Column(DataType.CHAR)
-  name: string;
-
-  @Column(DataType.CHAR)
-  email: string;
-
-  @Column(DataType.CHAR)
-  avatarUrl: string;
-
-  @Column(DataType.CHAR)
-  phone: string;
-
-  @HasMany(() => Payment, "income")
-  income: Payment[];
-
-  @HasMany(() => Group, "groups")
-  groups: Group[];
-
-  @HasMany(() => Subject, "subjects")
-  subjects: Subject[];
-}
+export const SchoolSchema = new Schema({
+  name: { type: String, default: null },
+  avatarUrl: { type: String, default: null },
+  email: { type: String, default: null },
+  phone: { type: String, default: null },
+  flights: [{ type: Schema.Types.ObjectId, ref: "subject" }],
+  grades: [{ type: Schema.Types.ObjectId, ref: "grade" }],
+  groups: [{ type: Schema.Types.ObjectId, ref: "group" }],
+  payments: [{ type: Schema.Types.ObjectId, ref: "payment" }],
+  principals: [{ type: Schema.Types.ObjectId, ref: "user" }],
+  programs: [{ type: Schema.Types.ObjectId, ref: "program" }],
+  students: [{ type: Schema.Types.ObjectId, ref: "user" }],
+  subjects: [{ type: Schema.Types.ObjectId, ref: "subject" }],
+  createdAt: { type: Number, default: Date.now() },
+  updatedAt: { type: Number, default: Date.now() }
+});

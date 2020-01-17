@@ -1,5 +1,13 @@
 export class ReceiveSubjectDto {
   _id?: string;
-  email: string;
+  folio: string;
+  name: string;
+  description?: string;
+  avatarUrl?: string;
+  email?: string;
   grades?: string[];
+  school: string;
+  programs?: string[];
+  createdAt?: number;
+  updatedAt: number;
 }

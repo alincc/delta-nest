@@ -1,43 +1,60 @@
-import { Flight } from './flight.model';
-import { Grade } from './grade.model';
-import { Group } from './group.model';
-import { Payment } from './payment.model';
-import { Principal } from './principal.model';
-import { School } from './school.model';
-import { Student } from './student.model';
-import { Subject } from './subject.model';
+import { FlightSchema } from "./flight.model";
+import { GradeSchema } from "./grade.model";
+import { GroupSchema } from "./group.model";
+import { PaymentSchema } from "./payment.model";
+import { UserSchema } from "./user.model";
+import { SchoolSchema } from "./school.model";
+import { SubjectSchema } from "./subject.model";
+import { Connection } from "mongoose";
+import { ProgramSchema } from "./program.model";
 
 export const ModelsProviders = [
   {
-    provide: 'FLIGHTS_REPOSITORY',
-    useValue: Flight,
+    provide: "FLIGHT_MODEL",
+    useFactory: (connection: Connection) =>
+      connection.model("flight", FlightSchema),
+    inject: ["DATABASE_CONNECTION"]
   },
   {
-    provide: 'GRADES_REPOSITORY',
-    useValue: Grade,
+    provide: "GRADE_MODEL",
+    useFactory: (connection: Connection) =>
+      connection.model("grade", GradeSchema),
+    inject: ["DATABASE_CONNECTION"]
   },
   {
-    provide: 'GROUPS_REPOSITORY',
-    useValue: Group,
+    provide: "GROUP_MODEL",
+    useFactory: (connection: Connection) =>
+      connection.model("group", GroupSchema),
+    inject: ["DATABASE_CONNECTION"]
   },
   {
-    provide: 'PAYMENTS_REPOSITORY',
-    useValue: Payment,
+    provide: "PAYMENT_MODEL",
+    useFactory: (connection: Connection) =>
+      connection.model("payment", PaymentSchema),
+    inject: ["DATABASE_CONNECTION"]
   },
   {
-    provide: 'PRINCIPALS_REPOSITORY',
-    useValue: Principal,
+    provide: "PROGRAM_MODEL",
+    useFactory: (connection: Connection) =>
+      connection.model("program", ProgramSchema),
+    inject: ["DATABASE_CONNECTION"]
   },
   {
-    provide: 'SCHOOLS_REPOSITORY',
-    useValue: School,
+    provide: "USER_MODEL",
+    useFactory: (connection: Connection) =>
+      connection.model("user", UserSchema),
+    inject: ["DATABASE_CONNECTION"]
   },
   {
-    provide: 'STUDENTS_REPOSITORY',
-    useValue: Student,
+    provide: "SCHOOL_MODEL",
+    useFactory: (connection: Connection) =>
+      connection.model("school", SchoolSchema),
+    inject: ["DATABASE_CONNECTION"]
   },
   {
-    provide: 'SUBJECTS_REPOSITORY',
-    useValue: Subject,
-  },
+    provide: "SUBJECT_MODEL",
+    useFactory: (connection: Connection) =>
+      connection.model("subject", SubjectSchema),
+    inject: ["DATABASE_CONNECTION"]
+  }
 ];

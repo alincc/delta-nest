@@ -1,5 +1,6 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { NestFactory } from "@nestjs/core";
+import { AppModule } from "./app.module";
+import { ValidationPipe } from "@nestjs/common";
 
 declare const module: any;
 
@@ -7,10 +8,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
       origin: true,
-      allowedHeaders: ['Content-Type'],
-      optionsSuccessStatus: 200,
-    },
+      allowedHeaders: ["Content-Type"],
+      optionsSuccessStatus: 200
+    }
   });
+
+  app.useGlobalPipes(new ValidationPipe());
+
   await app.listen(3000);
 
   if (module.hot) {

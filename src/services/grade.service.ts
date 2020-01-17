@@ -1,14 +1,73 @@
 import { Injectable, Inject } from "@nestjs/common";
-import { Grade } from "src/database/models/grade.model";
+import { Model, Types } from "mongoose";
+import { IGrade } from "src/interfaces/grade.interface";
 
 @Injectable()
 export class GradeService {
   constructor(
-    @Inject("GRADES_REPOSITORY")
-    private readonly gradeRepository: typeof Grade
+    @Inject("GRADE_MODEL")
+    private readonly gradeModel: Model<IGrade>
   ) {}
 
-  async findAll(): Promise<Grade[]> {
-    return await this.gradeRepository.findAll<Grade>();
+  async findAll(): Promise<IGrade[]> {
+    return await this.gradeModel.find().exec();
+  }
+
+  public async findById(id: string): Promise<IGrade> {
+    return await this.gradeModel.findById(id).exec();
+  }
+
+  async findAllInSchool(schoolId: string): Promise<IGrade[]> {
+    return await this.gradeModel
+      .find({
+        schools: Types.ObjectId(schoolId)
+      })
+      .exec();
+  }
+
+  public async findOne(name: string): Promise<IGrade> {
+    return await this.gradeModel.findOne({ name }).exec();
+  }
+
+  public async createOneOrMany(
+    grade: IGrade | IGrade[]
+  ): Promise<IGrade | IGrade[]> {
+    return await this.gradeModel.create(grade);
+  }
+
+  public async updateCreateOne(id: string, grade: IGrade) {
+    return await this.gradeModel
+      .findByIdAndUpdate(id, grade, {
+        new: true,
+        runValidators: true,
+        upsert: true
+      })
+      .exec();
+  }
+
+  public async updateMany(conditions: IGrade, newValues: IGrade) {
+    return await this.gradeModel
+      .updateMany(conditions, { $set: newValues })
+      .exec();
+  }
+
+  public async pullMany(conditions: IGrade, pullProperties: IGrade) {
+    return await this.gradeModel
+      .findOneAndUpdate(
+        conditions,
+        {
+          $pullAll: { pullProperties }
+        },
+        { new: true }
+      )
+      .exec();
+  }
+
+  public async deleteOne(id: string) {
+    return await this.gradeModel.deleteOne({ _id: Types.ObjectId(id) }).exec();
+  }
+
+  public async deleteMany(conditions: IGrade) {
+    return await this.gradeModel.deleteMany(conditions).exec();
   }
 }

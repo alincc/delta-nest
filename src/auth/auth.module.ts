@@ -4,16 +4,12 @@ import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
 import { jwtConstants } from "./constants";
 
-import { AuthPrincipalController } from "./principal/auth-principal.controller";
-import { AuthStudentController } from "./student/auth-student.controller";
+import { AuthController } from "./auth.controller";
 
-import { LocalStudentStrategy } from "src/guards/local-student.strategy";
-import { JwtStudentStrategy } from "src/guards/jwt-student.strategy";
-import { JwtPrincipalStrategy } from "src/guards/jwt-principal.strategy";
-import { LocalPrincipalStrategy } from "src/guards/local-principal.strategy";
+import { JwtStrategy } from "src/guards/jwt.strategy";
+import { LocalStrategy } from "src/guards/local.strategy";
 
-import { AuthStudentService } from "./student/auth-student.service";
-import { AuthPrincipalService } from "./principal/auth-principal.service";
+import { AuthService } from "./auth.service";
 
 @Module({
   imports: [
@@ -24,22 +20,8 @@ import { AuthPrincipalService } from "./principal/auth-principal.service";
       signOptions: { expiresIn: "1d" }
     })
   ],
-  providers: [
-    AuthStudentService,
-    AuthPrincipalService,
-    LocalStudentStrategy,
-    JwtStudentStrategy,
-    LocalPrincipalStrategy,
-    JwtPrincipalStrategy
-  ],
-  exports: [
-    AuthStudentService,
-    AuthPrincipalService,
-    LocalStudentStrategy,
-    JwtStudentStrategy,
-    LocalPrincipalStrategy,
-    JwtPrincipalStrategy
-  ],
-  controllers: [AuthPrincipalController, AuthStudentController]
+  providers: [AuthService, LocalStrategy, JwtStrategy],
+  exports: [AuthService, LocalStrategy, JwtStrategy],
+  controllers: [AuthController]
 })
 export class AuthModule {}

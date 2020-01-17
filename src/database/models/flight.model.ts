@@ -1,37 +1,20 @@
-import { Table, Column, Model, DataType, HasMany } from "sequelize-typescript";
-import { Student } from "./student.model";
-import { Principal } from "./principal.model";
+import { Schema } from "mongoose";
 
-@Table
-export class Flight extends Model<Flight> {
-  @Column({
-    type: DataType.CHAR,
-    defaultValue: DataType.UUIDV4,
-    primaryKey: true
-  })
-  _id?: string;
-
-  @Column(DataType.TEXT)
-  description: string;
-
-  @Column(DataType.CHAR)
-  folio: string;
-
-  @Column(DataType.INTEGER)
-  time: number;
-
-  @Column(DataType.INTEGER)
-  maxPilots: number;
-
-  @Column(DataType.BOOLEAN)
-  isApproved: boolean;
-
-  @Column(DataType.BOOLEAN)
-  isPaid: boolean;
-
-  @HasMany(() => Student, "pilots")
-  pilots: Student[];
-
-  @HasMany(() => Principal, "principal")
-  principal: Principal[];
-}
+export const FlightSchema = new Schema({
+  folio: {
+    type: String,
+    unique: [true, "folio must be unique"],
+    required: [true, "folio is requiered"]
+  },
+  name: { type: String, default: null },
+  description: { type: String, default: null },
+  startDate: { type: Number, default: Date.now() },
+  duration: { type: Number, default: 0 },
+  cost: { type: Number, default: 0 },
+  enlisted: [{ type: Schema.Types.ObjectId, ref: "user" }],
+  approved: [{ type: Schema.Types.ObjectId, ref: "user" }],
+  school: { type: Schema.Types.ObjectId, ref: "school" },
+  authorizedBy: { type: Schema.Types.ObjectId, ref: "user" },
+  createdAt: { type: Number, default: Date.now() },
+  updatedAt: { type: Number, default: Date.now() }
+});

@@ -1,11 +1,15 @@
 export class ReceiveFlightDto {
-  _id?: string;
-  description: string;
+  _id: string;
   folio: string;
-  time: number;
-  maxPilots: number;
-  isApproved: boolean;
-  isPaid: boolean;
-  pilots?: string[];
-  principal?: string[];
+  name: string;
+  description?: string;
+  startDate: number;
+  duration: number;
+  cost: number;
+  enlisted?: string[];
+  approved?: string[];
+  school: string;
+  authorizedBy: string;
+  createdAt?: number;
+  updatedAt: number;
 }

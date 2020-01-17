@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-export const SubjectSchema = new Schema({
+export const ProgramSchema = new Schema({
   folio: {
     type: String,
     unique: [true, "folio must be unique"],
@@ -10,7 +10,7 @@ export const SubjectSchema = new Schema({
   description: { type: String, default: null },
   avatarUrl: { type: String, default: null },
   email: { type: String, default: null },
-  grades: [{ type: Schema.Types.ObjectId, ref: "grade" }],
+  subjects: [{ type: Schema.Types.ObjectId, ref: "subject" }],
   school: { type: Schema.Types.ObjectId, ref: "school" },
   createdAt: { type: Number, default: Date.now() },
   updatedAt: { type: Number, default: Date.now() }

@@ -1,8 +1,12 @@
-import { IStudent } from "./student.iterface";
+import { Document, Types } from "mongoose";
+import { ISchool } from "./school.interface";
+import { IUser } from "./user.interface";
 
-export interface IGroup {
-  _id?: string;
+export interface IGroup extends Document {
   name: string;
-  avatarUrl: string;
-  students?: IStudent[] | string[];
+  description: string;
+  members: IUser[] | Types.ObjectId[];
+  school: ISchool | Types.ObjectId;
+  createdAt?: number;
+  updatedAt: number;
 }

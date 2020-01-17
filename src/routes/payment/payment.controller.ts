@@ -3,7 +3,6 @@ import {
   Post,
   Body,
   UseGuards,
-  Req,
   Res,
   Get,
   Param,
@@ -17,8 +16,7 @@ import { AuthGuard } from "@nestjs/passport";
 import { Roles } from "src/guards/roles.decorator";
 import { RolesGuard } from "src/guards/roles.guard";
 import { IResponse } from "src/interfaces/response.interface";
-import { Response, Request } from "express";
-import { IUser } from "src/interfaces/user.interface";
+import { Response } from "express";
 import { IGroup } from "src/interfaces/group.interface";
 import { PaymentControllerService } from "./payment.service";
 
@@ -30,7 +28,7 @@ export class PaymentController {
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Get()
-  async findAll(@Req() request, @Res() response: Response) {
+  async findAll(@Res() response: Response) {
     return this.paymentControllerService
       .findAll()
       .then((success: IResponse) => {

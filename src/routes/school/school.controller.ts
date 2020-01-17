@@ -2,7 +2,6 @@ import {
   Controller,
   UseGuards,
   Post,
-  Req,
   Body,
   HttpStatus,
   HttpException,
@@ -18,8 +17,7 @@ import { RolesGuard } from "src/guards/roles.guard";
 import { ReceiveSchoolDto } from "src/dtos/receive-school.dto";
 import { SchoolControllerService } from "./school.service";
 import { ISchool } from "src/interfaces/school.interface";
-import { Response, Request } from "express";
-import { IUser } from "src/interfaces/user.interface";
+import { Response } from "express";
 import { IResponse } from "src/interfaces/response.interface";
 
 @Controller("schools")
@@ -31,7 +29,7 @@ export class SchoolController {
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Get()
-  async findAll(@Req() request, @Res() response: Response) {
+  async findAll(@Res() response: Response) {
     return this.schoolControllerService
       .findAll()
       .then((success: IResponse) => {

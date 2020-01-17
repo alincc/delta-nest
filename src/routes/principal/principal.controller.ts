@@ -2,7 +2,6 @@ import {
   Controller,
   UseGuards,
   Post,
-  Req,
   Body,
   HttpStatus,
   HttpException,
@@ -15,7 +14,7 @@ import {
 import { AuthGuard } from "@nestjs/passport";
 import { Roles } from "src/guards/roles.decorator";
 import { RolesGuard } from "src/guards/roles.guard";
-import { Response, Request } from "express";
+import { Response } from "express";
 import { IUser } from "src/interfaces/user.interface";
 import { IResponse } from "src/interfaces/response.interface";
 import { PrincipalControllerService } from "./principal.service";
@@ -29,7 +28,7 @@ export class PrincipalController {
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Get()
-  async findAll(@Req() request, @Res() response: Response) {
+  async findAll(@Res() response: Response) {
     return this.principalControllerService
       .findAll()
       .then((success: IResponse) => {

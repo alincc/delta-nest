@@ -3,7 +3,6 @@ import {
   Post,
   Body,
   UseGuards,
-  Req,
   Res,
   Get,
   Param,
@@ -29,7 +28,7 @@ export class GroupController {
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Get()
-  async findAll(@Req() request, @Res() response: Response) {
+  async findAll(@Res() response: Response) {
     return this.groupControllerService
       .findAll()
       .then((success: IResponse) => {

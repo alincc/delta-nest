@@ -3,7 +3,6 @@ import {
   Post,
   Body,
   UseGuards,
-  Req,
   Res,
   Get,
   Param,
@@ -12,7 +11,6 @@ import {
   Delete,
   Put
 } from "@nestjs/common";
-import { ReceiveGroupDto } from "src/dtos/receive-group.dto";
 import { AuthGuard } from "@nestjs/passport";
 import { Roles } from "src/guards/roles.decorator";
 import { RolesGuard } from "src/guards/roles.guard";

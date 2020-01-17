@@ -75,3 +75,15 @@ SchoolSchema.pre("remove", function(next) {
       return next();
     });
 });
+
+SchoolSchema.post("save", function(document: ISchool, next) {
+  return model("user")
+    .findByIdAndUpdate(document.principals, {
+      $push: {
+        schools: document._id
+      }
+    })
+    .then(() => {
+      return next();
+    });
+});

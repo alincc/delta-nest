@@ -33,3 +33,15 @@ ProgramSchema.pre("remove", function(next) {
       return next();
     });
 });
+
+ProgramSchema.post("save", function(document: IProgram, next) {
+  return model("school")
+    .findByIdAndUpdate(document.school, {
+      $push: {
+        programs: document._id
+      }
+    })
+    .then(() => {
+      return next();
+    });
+});

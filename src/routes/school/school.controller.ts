@@ -95,15 +95,9 @@ export class SchoolController {
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Post()
-  async createOne(
-    @Body() school: ReceiveSchoolDto,
-    @Req() request: Request,
-    @Res() response: Response
-  ) {
-    const user = request.user as IUser;
-
+  async createOne(@Body() school: ReceiveSchoolDto, @Res() response: Response) {
     return this.schoolControllerService
-      .createOne(user, (school as unknown) as ISchool)
+      .createOne((school as unknown) as ISchool)
       .then((success: IResponse) => {
         return response.status(201).json(success);
       })

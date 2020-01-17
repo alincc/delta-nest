@@ -7,6 +7,7 @@ import { PaymentService } from "./payment.service";
 import { SchoolService } from "./school.service";
 import { SubjectService } from "./subject.service";
 import { UserService } from "./user.service";
+import { ProgramService } from "./program.service";
 
 @Module({
   imports: [DatabaseModule],
@@ -15,6 +16,7 @@ import { UserService } from "./user.service";
     GradeService,
     GroupService,
     PaymentService,
+    ProgramService,
     SchoolService,
     SubjectService,
     UserService
@@ -24,6 +26,7 @@ import { UserService } from "./user.service";
     GradeService,
     GroupService,
     PaymentService,
+    ProgramService,
     SchoolService,
     SubjectService,
     UserService

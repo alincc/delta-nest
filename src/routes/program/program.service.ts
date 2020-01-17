@@ -1,21 +1,20 @@
 import { Injectable } from "@nestjs/common";
-
+import { ProgramService } from "src/services/program.service";
 import { IResponse } from "src/interfaces/response.interface";
-import { PaymentService } from "src/services/payment.service";
-import { IPayment } from "src/interfaces/payment.interface";
+import { IProgram } from "src/interfaces/program.interface";
 
 import * as _ from "lodash";
 
 @Injectable()
-export class PaymentControllerService {
-  constructor(private readonly paymentService: PaymentService) {}
+export class ProgramControllerService {
+  constructor(private readonly programService: ProgramService) {}
 
   public async findAll(): Promise<IResponse> {
-    return this.paymentService.findAll().then((document: IPayment[]) => {
+    return this.programService.findAll().then((document: IProgram[]) => {
       return {
         errors: false,
         statusCode: 200,
-        message: "Payments Found",
+        message: "Programs Found",
         data: { count: document.length },
         ...document
       };
@@ -23,13 +22,13 @@ export class PaymentControllerService {
   }
 
   public async findAllInSchool(schoolId: string): Promise<IResponse> {
-    return this.paymentService
+    return this.programService
       .findAllInSchool(schoolId)
-      .then((document: IPayment[]) => {
+      .then((document: IProgram[]) => {
         return {
           errors: false,
           statusCode: 200,
-          message: "Payments Found",
+          message: "Programs Found",
           data: { count: document.length },
           ...document
         };
@@ -37,51 +36,51 @@ export class PaymentControllerService {
   }
 
   public async findById(id: string): Promise<IResponse> {
-    return this.paymentService.findById(id).then((document: IPayment) => {
+    return this.programService.findById(id).then((document: IProgram) => {
       return {
         errors: false,
         statusCode: 200,
-        message: "Payment Found",
+        message: "Program Found",
         data: document
       };
     });
   }
 
-  public async createOne(payment: IPayment): Promise<IResponse> {
-    return this.paymentService
-      .createOneOrMany(payment)
-      .then((docuemnt: IPayment) => {
+  public async createOne(group: IProgram): Promise<IResponse> {
+    return this.programService
+      .createOneOrMany(group)
+      .then((document: IProgram) => {
         return {
           errors: false,
           statusCode: 201,
-          message: "Payment Created",
-          data: docuemnt
+          message: "Program Created",
+          data: document
         };
       });
   }
 
-  public async updateOne(id: string, payment: IPayment): Promise<IResponse> {
-    const sanitizedPayment = _.omit(payment, ["student", "school"]);
+  public async updateOne(id: string, group: IProgram): Promise<IResponse> {
+    const sanitizedGroup = _.omit(group, ["school", "subjects"]);
 
-    return this.paymentService
-      .updateCreateOne(id, sanitizedPayment)
+    return this.programService
+      .updateCreateOne(id, sanitizedGroup)
       .then((document: any) => {
-        document as IPayment;
+        document as IProgram;
         return {
           errors: false,
           statusCode: 200,
-          message: "Payment Updated",
+          message: "Program Updated",
           data: document
         };
       });
   }
 
   public async deleteOne(id: string): Promise<IResponse> {
-    return this.paymentService.deleteOne(id).then(() => {
+    return this.programService.deleteOne(id).then(() => {
       return {
         errors: false,
         statusCode: 200,
-        message: "Payment deleted",
+        message: "Program deleted",
         data: null
       };
     });

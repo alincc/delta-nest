@@ -1,6 +1,7 @@
 import { Schema, model, Types } from "mongoose";
 import { ProgramSchema } from "./program.model";
 import { IProgram } from "src/interfaces/program.interface";
+import { IPayment } from "src/interfaces/payment.interface";
 
 export const PaymentSchema = new Schema({
   folio: {
@@ -24,13 +25,42 @@ ProgramSchema.pre("remove", function(next) {
 
   return model("school")
     .updateMany(
-      { programs: Types.ObjectId(document._id) },
+      { payments: Types.ObjectId(document._id) },
       {
         $pull: {
-          programs: Types.ObjectId(document._id)
+          payments: Types.ObjectId(document._id)
         }
       }
     )
+    .then(() => {
+      return model("user").updateMany(
+        { payments: Types.ObjectId(document._id) },
+        {
+          $pull: {
+            payments: Types.ObjectId(document._id)
+          }
+        }
+      );
+    })
+    .then(() => {
+      return next();
+    });
+});
+
+ProgramSchema.post("save", function(document: IPayment, next) {
+  return model("school")
+    .findByIdAndUpdate(document.school, {
+      $push: {
+        payments: document._id
+      }
+    })
+    .then(() => {
+      return model("user").findByIdAndUpdate(document.student, {
+        $push: {
+          payments: document._id
+        }
+      });
+    })
     .then(() => {
       return next();
     });

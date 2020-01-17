@@ -18,8 +18,7 @@ import { Roles } from "src/guards/roles.decorator";
 import { RolesGuard } from "src/guards/roles.guard";
 import { GroupControllerService } from "./group.service";
 import { IResponse } from "src/interfaces/response.interface";
-import { Response, Request } from "express";
-import { IUser } from "src/interfaces/user.interface";
+import { Response } from "express";
 import { IGroup } from "src/interfaces/group.interface";
 
 @Controller("groups")
@@ -94,15 +93,9 @@ export class GroupController {
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Post()
-  async createOne(
-    @Body() group: ReceiveGroupDto,
-    @Req() request: Request,
-    @Res() response: Response
-  ) {
-    const user = request.user as IUser;
-
+  async createOne(@Body() group: ReceiveGroupDto, @Res() response: Response) {
     return this.groupControllerService
-      .createOne(user, (group as unknown) as IGroup)
+      .createOne((group as unknown) as IGroup)
       .then((success: IResponse) => {
         return response.status(201).json(success);
       })

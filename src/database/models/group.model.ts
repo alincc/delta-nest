@@ -37,3 +37,21 @@ GroupSchema.pre("remove", function(next) {
       return next();
     });
 });
+
+GroupSchema.post("save", function(document: IGroup, next) {
+  return model("school")
+    .findByIdAndUpdate(document.school, {
+      $push: {
+        groups: document._id
+      }
+    })
+    .then(() => {
+      return model("user").updateMany(
+        { _id: { $in: document.members } },
+        { group: document._id }
+      );
+    })
+    .then(() => {
+      return next();
+    });
+});

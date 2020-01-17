@@ -1,6 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { IUser } from "src/interfaces/user.interface";
-import { SchoolService } from "src/services/school.service";
 
 import { IResponse } from "src/interfaces/response.interface";
 import { GroupService } from "src/services/group.service";
@@ -10,16 +8,13 @@ import * as _ from "lodash";
 
 @Injectable()
 export class GroupControllerService {
-  constructor(
-    private readonly schoolService: SchoolService,
-    private readonly groupService: GroupService
-  ) {}
+  constructor(private readonly groupService: GroupService) {}
 
   public async findAll(): Promise<IResponse> {
     return this.groupService.findAll().then((document: IGroup[]) => {
       return {
         errors: false,
-        statusCode: 201,
+        statusCode: 200,
         message: "Groups Found",
         data: { count: document.length },
         ...document
@@ -33,7 +28,7 @@ export class GroupControllerService {
       .then((document: IGroup[]) => {
         return {
           errors: false,
-          statusCode: 201,
+          statusCode: 200,
           message: "Groups Found",
           data: { count: document.length },
           ...document
@@ -45,29 +40,22 @@ export class GroupControllerService {
     return this.groupService.findById(id).then((document: IGroup) => {
       return {
         errors: false,
-        statusCode: 201,
+        statusCode: 200,
         message: "Group Found",
         data: document
       };
     });
   }
 
-  public async createOne(principal: IUser, group: IGroup): Promise<IResponse> {
-    const created = (await this.groupService.createOneOrMany(group)) as IGroup;
-    const schoolId = principal.schools[0].toString();
-
-    return this.schoolService
-      .updateCreateOne(schoolId, {
-        $push: { groups: created._id }
-      })
-      .then(() => {
-        return {
-          errors: false,
-          statusCode: 201,
-          message: "Group Created",
-          data: created
-        };
-      });
+  public async createOne(group: IGroup): Promise<IResponse> {
+    return this.groupService.createOneOrMany(group).then((document: IGroup) => {
+      return {
+        errors: false,
+        statusCode: 201,
+        message: "Group Created",
+        data: document
+      };
+    });
   }
 
   public async updateOne(id: string, group: IGroup): Promise<IResponse> {

@@ -120,3 +120,19 @@ UserSchema.pre("remove", function(next) {
       });
   }
 });
+
+UserSchema.post("save", function(document: IUser, next) {
+  if (document.role == "STUDENT_ROLE") {
+    return model("school")
+      .findByIdAndUpdate(document.schools[0], {
+        $push: {
+          schools: document._id
+        }
+      })
+      .then(() => {
+        return next();
+      });
+  } else {
+    return next();
+  }
+});

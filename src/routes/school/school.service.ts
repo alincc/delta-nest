@@ -19,7 +19,7 @@ export class SchoolControllerService {
     return this.schoolService.findAll().then((document: ISchool[]) => {
       return {
         errors: false,
-        statusCode: 201,
+        statusCode: 200,
         message: "Schools Found",
         data: { count: document.length },
         ...document
@@ -33,7 +33,7 @@ export class SchoolControllerService {
       .then((document: ISchool[]) => {
         return {
           errors: false,
-          statusCode: 201,
+          statusCode: 200,
           message: "Schools Found",
           data: { count: document.length },
           ...document
@@ -45,34 +45,22 @@ export class SchoolControllerService {
     return this.schoolService.findById(id).then((document: ISchool) => {
       return {
         errors: false,
-        statusCode: 201,
+        statusCode: 200,
         message: "School Found",
         data: document
       };
     });
   }
 
-  public async createOne(
-    principal: IUser,
-    school: ISchool
-  ): Promise<IResponse> {
-    school.principals = [principal._id];
-
+  public async createOne(school: ISchool): Promise<IResponse> {
     return this.schoolService
       .createOneOrMany(school)
       .then((document: ISchool) => {
-        principal.schools.push(document._id);
-        return this.userService.updateCreateOne(principal._id, principal);
-      })
-      .then((document: any) => {
-        document as IUser;
-        let school = _.sortBy(document.schools, "date")[0];
-
         return {
           errors: false,
           statusCode: 201,
           message: "School Created",
-          data: school
+          data: document
         };
       });
   }

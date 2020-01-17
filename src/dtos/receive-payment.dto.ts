@@ -1,5 +1,4 @@
 export class ReceivePaymentDto {
-  _id?: string;
   folio: string;
   name: string;
   description?: string;

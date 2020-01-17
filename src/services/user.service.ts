@@ -57,7 +57,7 @@ export class UserService {
       .findOneAndUpdate(
         conditions,
         {
-          $pullAll: { pullProperties }
+          $pullAll: pullProperties
         },
         { new: true }
       )

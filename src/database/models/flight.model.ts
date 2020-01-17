@@ -1,4 +1,5 @@
-import { Schema } from "mongoose";
+import { Schema, model, Types } from "mongoose";
+import { IFlight } from "src/interfaces/flight.interface";
 
 export const FlightSchema = new Schema({
   folio: {
@@ -17,4 +18,31 @@ export const FlightSchema = new Schema({
   authorizedBy: { type: Schema.Types.ObjectId, ref: "user" },
   createdAt: { type: Number, default: Date.now() },
   updatedAt: { type: Number, default: Date.now() }
+});
+
+FlightSchema.pre("remove", function(next) {
+  let document: IFlight = this;
+
+  return model("school")
+    .updateMany(
+      { flights: Types.ObjectId(document._id) },
+      {
+        $pull: {
+          flights: Types.ObjectId(document._id)
+        }
+      }
+    )
+    .then(() => {
+      return model("user").updateMany(
+        { flights: Types.ObjectId(document._id) },
+        {
+          $pull: {
+            flights: Types.ObjectId(document._id)
+          }
+        }
+      );
+    })
+    .then(() => {
+      return next();
+    });
 });

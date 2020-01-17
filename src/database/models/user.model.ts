@@ -1,4 +1,7 @@
-import { Schema } from "mongoose";
+import { Schema, model, Types } from "mongoose";
+import { IUser } from "src/interfaces/user.interface";
+import { IPayment } from "src/interfaces/payment.interface";
+import { IGrade } from "src/interfaces/grade.interface";
 
 let userRoles = {
   values: ["PRINCIPAL_ROLE", "STUDENT_ROLE"],
@@ -49,4 +52,71 @@ export const UserSchema = new Schema({
   schools: [{ type: Schema.Types.ObjectId, ref: "school" }],
   createdAt: { type: Number, default: Date.now() },
   updatedAt: { type: Number, default: Date.now() }
+});
+
+UserSchema.pre("remove", function(next) {
+  let document: IUser = this;
+  if (document.role == "PRINCIPAL_ROLE") {
+    return model("school")
+      .updateMany(
+        { principals: Types.ObjectId(document._id) },
+        {
+          $pull: {
+            principals: Types.ObjectId(document._id)
+          }
+        }
+      )
+      .then(() => {
+        return next();
+      });
+  } else {
+    return model("school")
+      .updateMany(
+        { students: Types.ObjectId(document._id) },
+        {
+          $pull: {
+            students: Types.ObjectId(document._id)
+          }
+        }
+      )
+      .then(() => {
+        return model("group").updateMany(
+          { members: Types.ObjectId(document._id) },
+          {
+            $pull: {
+              members: Types.ObjectId(document._id)
+            }
+          }
+        );
+      })
+      .then(() => {
+        return model("flights").updateMany(
+          {
+            $or: [
+              { enlisted: Types.ObjectId(document._id) },
+              { approved: Types.ObjectId(document._id) }
+            ]
+          },
+          {
+            $pull: {
+              enlisted: Types.ObjectId(document._id),
+              approved: Types.ObjectId(document._id)
+            }
+          }
+        );
+      })
+      .then(() => {
+        return model("payment").deleteMany({
+          student: Types.ObjectId(document._id)
+        } as IPayment);
+      })
+      .then(() => {
+        return model("grade").deleteMany({
+          student: Types.ObjectId(document._id)
+        } as IGrade);
+      })
+      .then(() => {
+        return next();
+      });
+  }
 });

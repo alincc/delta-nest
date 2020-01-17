@@ -36,7 +36,7 @@ export class SchoolService {
     return await this.schoolModel.create(school);
   }
 
-  public async updateCreateOne(id: string, school: ISchool) {
+  public async updateCreateOne(id: string, school: ISchool | any) {
     return await this.schoolModel
       .findByIdAndUpdate(id, school, {
         new: true,
@@ -49,18 +49,6 @@ export class SchoolService {
   public async updateMany(conditions: ISchool, newValues: ISchool) {
     return await this.schoolModel
       .updateMany(conditions, { $set: newValues })
-      .exec();
-  }
-
-  public async pullMany(conditions: ISchool, pullProperties: ISchool) {
-    return await this.schoolModel
-      .findOneAndUpdate(
-        conditions,
-        {
-          $pullAll: { pullProperties }
-        },
-        { new: true }
-      )
       .exec();
   }
 

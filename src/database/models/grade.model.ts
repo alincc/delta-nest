@@ -1,4 +1,5 @@
-import { Schema } from "mongoose";
+import { Schema, model, Types } from "mongoose";
+import { IGrade } from "src/interfaces/grade.interface";
 
 export const GradeSchema = new Schema({
   name: { type: String, default: null },
@@ -9,4 +10,41 @@ export const GradeSchema = new Schema({
   school: { type: Schema.Types.ObjectId, ref: "school" },
   createdAt: { type: Number, default: Date.now() },
   updatedAt: { type: Number, default: Date.now() }
+});
+
+GradeSchema.pre("remove", function(next) {
+  let document: IGrade = this;
+
+  return model("school")
+    .updateMany(
+      { gardes: Types.ObjectId(document._id) },
+      {
+        $pull: {
+          gardes: Types.ObjectId(document._id)
+        }
+      }
+    )
+    .then(() => {
+      return model("subject").updateMany(
+        { gardes: Types.ObjectId(document._id) },
+        {
+          $pull: {
+            gardes: Types.ObjectId(document._id)
+          }
+        }
+      );
+    })
+    .then(() => {
+      return model("user").updateMany(
+        { gardes: Types.ObjectId(document._id) },
+        {
+          $pull: {
+            gardes: Types.ObjectId(document._id)
+          }
+        }
+      );
+    })
+    .then(() => {
+      return next();
+    });
 });

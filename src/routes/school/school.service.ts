@@ -4,33 +4,15 @@ import { ISchool } from "src/interfaces/school.interface";
 import { UserService } from "src/services/user.service";
 import { SchoolService } from "src/services/school.service";
 
-import * as _ from "lodash";
 import { IResponse } from "src/interfaces/response.interface";
-import { FlightService } from "src/services/flight.service";
-import { GradeService } from "src/services/grade.service";
-import { PaymentService } from "src/services/payment.service";
-import { SubjectService } from "src/services/subject.service";
-import { Types } from "mongoose";
-import { GroupService } from "src/services/group.service";
-import { IGroup } from "src/interfaces/group.interface";
-import { IGrade } from "src/interfaces/grade.interface";
-import { IFlight } from "src/interfaces/flight.interface";
-import { ProgramService } from "src/services/program.service";
-import { IProgram } from "src/interfaces/program.interface";
-import { IPayment } from "src/interfaces/payment.interface";
-import { ISubject } from "src/interfaces/subject.iterface";
+
+import * as _ from "lodash";
 
 @Injectable()
 export class SchoolControllerService {
   constructor(
     private readonly userService: UserService,
-    private readonly schoolService: SchoolService,
-    private readonly flightService: FlightService,
-    private readonly gradeService: GradeService,
-    private readonly groupService: GroupService,
-    private readonly programService: ProgramService,
-    private readonly paymentService: PaymentService,
-    private readonly subjectService: SubjectService
+    private readonly schoolService: SchoolService
   ) {}
 
   public async findAll(): Promise<IResponse> {
@@ -121,57 +103,13 @@ export class SchoolControllerService {
   }
 
   public async deleteOne(id: string): Promise<IResponse> {
-    return this.userService
-      .pullMany(
-        { schools: [Types.ObjectId(id)], role: "PRINCIPAL_ROLE" } as IUser,
-        { schools: [Types.ObjectId(id)] } as IUser
-      )
-      .then(() => {
-        return this.schoolService.deleteOne(id);
-      })
-      .then(() => {
-        return this.flightService.deleteMany({
-          school: Types.ObjectId(id)
-        } as IFlight);
-      })
-      .then(() => {
-        return this.paymentService.deleteMany({
-          school: Types.ObjectId(id)
-        } as IPayment);
-      })
-      .then(() => {
-        return this.groupService.deleteMany({
-          school: Types.ObjectId(id)
-        } as IGroup);
-      })
-      .then(() => {
-        return this.userService.deleteMany({
-          schools: [Types.ObjectId(id)],
-          role: "STUDENT_ROLE"
-        } as IUser);
-      })
-      .then(() => {
-        return this.programService.deleteMany({
-          school: Types.ObjectId(id)
-        } as IProgram);
-      })
-      .then(() => {
-        return this.subjectService.deleteMany({
-          school: Types.ObjectId(id)
-        } as ISubject);
-      })
-      .then(() => {
-        return this.gradeService.deleteMany({
-          school: Types.ObjectId(id)
-        } as IGrade);
-      })
-      .then(() => {
-        return {
-          errors: false,
-          statusCode: 200,
-          message: "School deleted",
-          data: null
-        };
-      });
+    return this.schoolService.deleteOne(id).then(() => {
+      return {
+        errors: false,
+        statusCode: 200,
+        message: "School deleted",
+        data: null
+      };
+    });
   }
 }

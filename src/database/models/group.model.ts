@@ -1,4 +1,5 @@
-import { Schema } from "mongoose";
+import { Schema, model, Types } from "mongoose";
+import { IGroup } from "src/interfaces/group.interface";
 
 export const GroupSchema = new Schema({
   name: {
@@ -10,4 +11,29 @@ export const GroupSchema = new Schema({
   school: { type: Schema.Types.ObjectId, ref: "school" },
   createdAt: { type: Number, default: Date.now() },
   updatedAt: { type: Number, default: Date.now() }
+});
+
+GroupSchema.pre("remove", function(next) {
+  let document: IGroup = this;
+
+  return model("school")
+    .updateMany(
+      { groups: Types.ObjectId(document._id) },
+      {
+        $pull: {
+          groups: Types.ObjectId(document._id)
+        }
+      }
+    )
+    .then(() => {
+      return model("user").updateMany(
+        { group: Types.ObjectId(document._id) },
+        {
+          group: null
+        }
+      );
+    })
+    .then(() => {
+      return next();
+    });
 });

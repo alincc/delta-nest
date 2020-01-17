@@ -100,10 +100,10 @@ export class SchoolController {
     @Req() request: Request,
     @Res() response: Response
   ) {
-    const user = request.user;
+    const user = request.user as IUser;
 
     return this.schoolControllerService
-      .createOne(user as IUser, (school as unknown) as ISchool)
+      .createOne(user, (school as unknown) as ISchool)
       .then((success: IResponse) => {
         return response.status(201).json(success);
       })

@@ -36,7 +36,7 @@ export class SchoolService {
     return await this.schoolModel.create(school);
   }
 
-  public async updateCreateOne(id: string, school: ISchool | any) {
+  public async updateCreateOne(id: string, school: ISchool | { $push: any }) {
     return await this.schoolModel
       .findByIdAndUpdate(id, school, {
         new: true,

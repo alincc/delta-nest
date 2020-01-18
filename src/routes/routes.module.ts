@@ -8,6 +8,7 @@ import { PaymentModule } from "./payment/payment.module";
 import { SchoolModule } from "./school/school.module";
 import { SubjectModule } from "./subject/subject.module";
 import { ProgramModule } from "./program/program.module";
+import { UploadModule } from "./upload/upload.module";
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { ProgramModule } from "./program/program.module";
     PaymentModule,
     SchoolModule,
     SubjectModule,
-    ProgramModule
+    ProgramModule,
+    UploadModule
   ],
   exports: [
     GroupModule,
@@ -30,7 +32,8 @@ import { ProgramModule } from "./program/program.module";
     PaymentModule,
     SchoolModule,
     SubjectModule,
-    ProgramModule
+    ProgramModule,
+    UploadModule
   ]
 })
 export class RoutesModule {}

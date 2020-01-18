@@ -49,3 +49,15 @@ SubjectSchema.pre("remove", function(next) {
       return next();
     });
 });
+
+SubjectSchema.post("save", function(document: ISubject, next) {
+  return model("school")
+    .findByIdAndUpdate(document.school, {
+      $push: {
+        subjects: document._id
+      }
+    })
+    .then(() => {
+      return next();
+    });
+});

@@ -6,6 +6,7 @@ export const GroupSchema = new Schema({
     type: String,
     required: [true, "name is required"]
   },
+  avatarUrl: { type: String, default: null },
   description: { type: String, default: null },
   members: [{ type: Schema.Types.ObjectId, ref: "user" }],
   school: { type: Schema.Types.ObjectId, ref: "school" },
@@ -44,12 +45,6 @@ GroupSchema.post("save", function(document: IGroup, next) {
       $push: {
         groups: document._id
       }
-    })
-    .then(() => {
-      return model("user").updateMany(
-        { _id: { $in: document.members } },
-        { group: document._id }
-      );
     })
     .then(() => {
       return next();

@@ -74,7 +74,7 @@ export class PrincipalController {
     const id = param["id"];
 
     return this.principalControllerService
-      .findById(id)
+      .findByIdAndRole(id)
       .then((success: IResponse) => {
         return response.status(201).json(success);
       })

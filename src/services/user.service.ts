@@ -29,6 +29,12 @@ export class UserService {
     return await this.userModel.findOne({ username }).exec();
   }
 
+  public async findByIdAndRole(id: string, role: string): Promise<IUser> {
+    return await this.userModel
+      .findOne({ _id: Types.ObjectId(id), role })
+      .exec();
+  }
+
   public async createOneOrMany(
     user: IUser | IUser[]
   ): Promise<IUser | IUser[]> {

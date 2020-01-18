@@ -21,8 +21,8 @@ export class SchoolControllerService {
         errors: false,
         statusCode: 200,
         message: "Schools Found",
-        data: { count: document.length },
-        ...document
+        count: document.length,
+        data: document
       };
     });
   }
@@ -35,8 +35,8 @@ export class SchoolControllerService {
           errors: false,
           statusCode: 200,
           message: "Schools Found",
-          data: { count: document.length },
-          ...document
+          count: document.length,
+          data: document
         };
       });
   }

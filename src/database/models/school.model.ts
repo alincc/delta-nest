@@ -24,51 +24,54 @@ export const SchoolSchema = new Schema({
   updatedAt: { type: Number, default: Date.now() }
 });
 
-SchoolSchema.pre("remove", function(next) {
-  let document: ISchool = this;
+SchoolSchema.pre("deleteOne", async function(next) {
+  const id = await (this as any)._id;
+
+  console.log(id);
+
   return model("user")
     .updateMany(
-      { schools: Types.ObjectId(document._id), role: "PRINCIPAL_ROLE" },
+      { schools: Types.ObjectId(id), role: "PRINCIPAL_ROLE" },
       {
         $pull: {
-          schools: Types.ObjectId(document._id)
+          schools: Types.ObjectId(id)
         }
       }
     )
     .then(() => {
       return model("user").deleteMany({
-        schools: Types.ObjectId(document._id),
+        schools: Types.ObjectId(id),
         role: "STUDENT_ROLE"
       });
     })
     .then(() => {
       return model("group").deleteMany({
-        school: Types.ObjectId(document._id)
+        school: Types.ObjectId(id)
       } as IGroup);
     })
     .then(() => {
       return model("payment").deleteMany({
-        school: Types.ObjectId(document._id)
+        school: Types.ObjectId(id)
       } as IPayment);
     })
     .then(() => {
       return model("flight").deleteMany({
-        school: Types.ObjectId(document._id)
+        school: Types.ObjectId(id)
       } as IFlight);
     })
     .then(() => {
       return model("program").deleteMany({
-        school: Types.ObjectId(document._id)
+        school: Types.ObjectId(id)
       } as IProgram);
     })
     .then(() => {
       return model("subject").deleteMany({
-        school: Types.ObjectId(document._id)
+        school: Types.ObjectId(id)
       } as ISubject);
     })
     .then(() => {
       return model("grade").deleteMany({
-        school: Types.ObjectId(document._id)
+        school: Types.ObjectId(id)
       } as IGrade);
     })
     .then(() => {
@@ -80,7 +83,7 @@ SchoolSchema.post("save", function(document: ISchool, next) {
   return model("user")
     .findByIdAndUpdate(document.principals, {
       $push: {
-        schools: document._id
+        schools: Types.ObjectId(document._id)
       }
     })
     .then(() => {

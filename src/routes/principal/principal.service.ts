@@ -16,8 +16,8 @@ export class PrincipalControllerService {
         errors: false,
         statusCode: 200,
         message: "Users Found",
-        data: { count: document.length },
-        ...document
+        count: document.length,
+        data: document
       };
     });
   }
@@ -30,8 +30,8 @@ export class PrincipalControllerService {
           errors: false,
           statusCode: 200,
           message: "Users Found",
-          data: { count: document.length },
-          ...document
+          count: document.length,
+          data: document
         };
       });
   }
@@ -45,6 +45,19 @@ export class PrincipalControllerService {
         data: document
       };
     });
+  }
+
+  public async findByIdAndRole(id: string): Promise<IResponse> {
+    return this.userService
+      .findByIdAndRole(id, "PRINCIPAL_ROLE")
+      .then((document: IUser) => {
+        return {
+          errors: false,
+          statusCode: 200,
+          message: "User Found",
+          data: document
+        };
+      });
   }
 
   public async createOne(user: IUser): Promise<IResponse> {

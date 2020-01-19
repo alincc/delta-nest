@@ -20,7 +20,7 @@ export class GroupService {
   async findAllInSchool(schoolId: string): Promise<IGroup[]> {
     return await this.groupModel
       .find({
-        schools: Types.ObjectId(schoolId)
+        school: Types.ObjectId(schoolId)
       })
       .exec();
   }
@@ -64,10 +64,22 @@ export class GroupService {
   }
 
   public async deleteOne(id: string) {
-    return await this.groupModel.deleteOne({ _id: Types.ObjectId(id) }).exec();
+    return await this.groupModel
+      .findById(id)
+      .exec()
+      .then((document: IGroup) => {
+        document.remove();
+      });
   }
 
   public async deleteMany(conditions: IGroup) {
-    return await this.groupModel.deleteMany(conditions).exec();
+    return await this.groupModel
+      .find(conditions)
+      .exec()
+      .then((documents: IGroup[]) => {
+        return documents.forEach(document => {
+          document.remove();
+        });
+      });
   }
 }

@@ -24,54 +24,50 @@ export const SchoolSchema = new Schema({
   updatedAt: { type: Number, default: Date.now() }
 });
 
-SchoolSchema.pre("deleteOne", async function(next) {
-  const id = await (this as any)._id;
-
-  console.log(id);
-
+SchoolSchema.post("remove", function(document: ISchool, next) {
   return model("user")
     .updateMany(
-      { schools: Types.ObjectId(id), role: "PRINCIPAL_ROLE" },
+      { schools: Types.ObjectId(document._id), role: "PRINCIPAL_ROLE" },
       {
         $pull: {
-          schools: Types.ObjectId(id)
+          schools: Types.ObjectId(document._id)
         }
       }
     )
     .then(() => {
       return model("user").deleteMany({
-        schools: Types.ObjectId(id),
+        schools: Types.ObjectId(document._id),
         role: "STUDENT_ROLE"
       });
     })
     .then(() => {
       return model("group").deleteMany({
-        school: Types.ObjectId(id)
+        school: Types.ObjectId(document._id)
       } as IGroup);
     })
     .then(() => {
       return model("payment").deleteMany({
-        school: Types.ObjectId(id)
+        school: Types.ObjectId(document._id)
       } as IPayment);
     })
     .then(() => {
       return model("flight").deleteMany({
-        school: Types.ObjectId(id)
+        school: Types.ObjectId(document._id)
       } as IFlight);
     })
     .then(() => {
       return model("program").deleteMany({
-        school: Types.ObjectId(id)
+        school: Types.ObjectId(document._id)
       } as IProgram);
     })
     .then(() => {
       return model("subject").deleteMany({
-        school: Types.ObjectId(id)
+        school: Types.ObjectId(document._id)
       } as ISubject);
     })
     .then(() => {
       return model("grade").deleteMany({
-        school: Types.ObjectId(id)
+        school: Types.ObjectId(document._id)
       } as IGrade);
     })
     .then(() => {

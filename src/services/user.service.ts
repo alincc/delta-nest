@@ -71,10 +71,22 @@ export class UserService {
   }
 
   public async deleteOne(id: string) {
-    return await this.userModel.deleteOne({ _id: Types.ObjectId(id) }).exec();
+    return await this.userModel
+      .findById(id)
+      .exec()
+      .then((document: IUser) => {
+        document.remove();
+      });
   }
 
   public async deleteMany(conditions: IUser) {
-    return await this.userModel.deleteMany(conditions).exec();
+    return await this.userModel
+      .find(conditions)
+      .exec()
+      .then((documents: IUser[]) => {
+        return documents.forEach(document => {
+          document.remove();
+        });
+      });
   }
 }

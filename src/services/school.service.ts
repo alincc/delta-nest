@@ -53,6 +53,11 @@ export class SchoolService {
   }
 
   public async deleteOne(id: string) {
-    return await this.schoolModel.deleteOne({ _id: Types.ObjectId(id) }).exec();
+    return await this.schoolModel
+      .findById(id)
+      .exec()
+      .then((document: ISchool) => {
+        document.remove();
+      });
   }
 }

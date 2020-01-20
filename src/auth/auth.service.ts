@@ -45,4 +45,17 @@ export class AuthService {
       };
     });
   }
+
+  async checkUsername(username: string) {
+    return this.userService.findByUsername(username).then((document: IUser) => {
+      let data = _.omit(document.toObject(), "password");
+
+      return {
+        errors: false,
+        statusCode: 201,
+        message: "User Found",
+        data
+      };
+    });
+  }
 }

@@ -10,11 +10,7 @@ let userRoles = {
 
 export const UserSchema = new Schema({
   role: { type: String, default: "STUDENT_ROLE", enum: userRoles },
-  email: {
-    type: String,
-    unique: [true, "email must be unique"],
-    required: [true, "email is required"]
-  },
+  email: { type: String, default: null },
   avatarUrl: { type: String, default: null },
   username: {
     type: String,
@@ -127,17 +123,15 @@ UserSchema.pre("remove", function(next) {
 });
 
 UserSchema.post("save", function(document: IUser, next) {
-  if (document.role == "STUDENT_ROLE") {
-    return model("school")
-      .findByIdAndUpdate(document.schools[0], {
-        $push: {
-          schools: document._id
-        }
-      })
-      .then(() => {
-        return next();
-      });
-  } else {
-    return next();
-  }
+  console.log(document.schools[0]);
+
+  return model("school")
+    .findByIdAndUpdate(document.schools[0], {
+      $push: {
+        schools: document._id
+      }
+    })
+    .then(() => {
+      return next();
+    });
 });

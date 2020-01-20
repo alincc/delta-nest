@@ -3,19 +3,36 @@ import {
   UseGuards,
   Post,
   Body,
-  HttpException,
   HttpStatus,
   Req,
-  Res
+  Res,
+  Get,
+  Param
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { AuthService } from "src/auth/auth.service";
 import { ReceiveUserDto } from "src/dtos/receive-user.dto";
 import { IUser } from "src/interfaces/user.interface";
+import { Response } from "express";
 
 @Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @Get(":username")
+  async checkUsername(@Param() param, @Res() response: Response) {
+    this.authService
+      .checkUsername(param.username)
+      .then(success => {
+        return response.status(200).json(success);
+      })
+      .catch(() => {
+        return response.status(404).json({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: "Student Not Found"
+        });
+      });
+  }
 
   @UseGuards(AuthGuard("local"))
   @Post("login")
@@ -27,13 +44,10 @@ export class AuthController {
         return response.status(200).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.INTERNAL_SERVER_ERROR,
-            error: "Student Login Failed Something is Wrong"
-          },
-          500
-        );
+        return response.status(500).json({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: "Student Login Failed Something is Wrong"
+        });
       });
   }
 
@@ -45,13 +59,10 @@ export class AuthController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error: "Student Already Exists, Use student login instead"
-          },
-          400
-        );
+        return response.status(500).json({
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: "Student Login Failed Something is Wrong"
+        });
       });
   }
 }

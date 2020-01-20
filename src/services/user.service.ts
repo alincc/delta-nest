@@ -35,6 +35,10 @@ export class UserService {
       .exec();
   }
 
+  public async findByUsername(username: string): Promise<IUser> {
+    return await this.userModel.findOne({ username: username }).exec();
+  }
+
   public async createOneOrMany(
     user: IUser | IUser[]
   ): Promise<IUser | IUser[]> {

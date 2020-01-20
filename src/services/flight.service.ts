@@ -70,4 +70,8 @@ export class FlightService {
   public async deleteMany(conditions: IFlight) {
     return await this.flightModel.deleteMany(conditions).exec();
   }
+
+  public async deleteAll() {
+    return await this.flightModel.deleteMany({}).exec();
+  }
 }

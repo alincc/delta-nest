@@ -72,4 +72,8 @@ export class SubjectService {
   public async deleteMany(conditions: ISubject) {
     return await this.subjectModel.deleteMany(conditions).exec();
   }
+
+  public async deleteAll() {
+    return await this.subjectModel.deleteMany({}).exec();
+  }
 }

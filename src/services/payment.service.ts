@@ -72,4 +72,8 @@ export class PaymentService {
   public async deleteMany(conditions: IPayment) {
     return await this.paymentModel.deleteMany(conditions).exec();
   }
+
+  public async deleteAll() {
+    return await this.paymentModel.deleteMany({}).exec();
+  }
 }

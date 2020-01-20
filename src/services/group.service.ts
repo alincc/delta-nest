@@ -82,4 +82,8 @@ export class GroupService {
         });
       });
   }
+
+  public async deleteAll() {
+    return await this.groupModel.deleteMany({}).exec();
+  }
 }

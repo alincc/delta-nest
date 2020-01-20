@@ -9,6 +9,7 @@ import { SchoolModule } from "./school/school.module";
 import { SubjectModule } from "./subject/subject.module";
 import { ProgramModule } from "./program/program.module";
 import { UploadModule } from "./upload/upload.module";
+import { MaintenanceModule } from './maintenance/maintenance.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { UploadModule } from "./upload/upload.module";
     SchoolModule,
     SubjectModule,
     ProgramModule,
-    UploadModule
+    UploadModule,
+    MaintenanceModule
   ],
   exports: [
     GroupModule,

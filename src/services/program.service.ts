@@ -72,4 +72,8 @@ export class ProgramService {
   public async deleteMany(conditions: IProgram) {
     return await this.programModel.deleteMany(conditions).exec();
   }
+
+  public async deleteAll() {
+    return await this.programModel.deleteMany({}).exec();
+  }
 }

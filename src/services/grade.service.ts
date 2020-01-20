@@ -70,4 +70,8 @@ export class GradeService {
   public async deleteMany(conditions: IGrade) {
     return await this.gradeModel.deleteMany(conditions).exec();
   }
+
+  public async deleteAll() {
+    return await this.gradeModel.deleteMany({}).exec();
+  }
 }

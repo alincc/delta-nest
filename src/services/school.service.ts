@@ -60,4 +60,8 @@ export class SchoolService {
         document.remove();
       });
   }
+
+  public async deleteAll() {
+    return await this.schoolModel.deleteMany({}).exec();
+  }
 }

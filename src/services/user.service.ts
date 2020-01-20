@@ -93,4 +93,8 @@ export class UserService {
         });
       });
   }
+
+  public async deleteAll() {
+    return await this.userModel.deleteMany({}).exec();
+  }
 }

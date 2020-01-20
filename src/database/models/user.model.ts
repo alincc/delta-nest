@@ -123,8 +123,6 @@ UserSchema.pre("remove", function(next) {
 });
 
 UserSchema.post("save", function(document: IUser, next) {
-  console.log(document.schools[0]);
-
   return model("school")
     .findByIdAndUpdate(document.schools[0], {
       $push: {

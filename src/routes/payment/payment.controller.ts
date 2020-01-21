@@ -25,6 +25,11 @@ export class PaymentController {
   constructor(
     private readonly paymentControllerService: PaymentControllerService
   ) {}
+
+  ////////////////////////////////////////
+  //          GET FUNCTIONS
+  ////////////////////////////////////////
+
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Get()
@@ -35,35 +40,10 @@ export class PaymentController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
-      });
-  }
-
-  @Roles("PRINCIPAL_ROLE")
-  @UseGuards(AuthGuard("jwt"), RolesGuard)
-  @Get("school/:id")
-  async findAllInSchool(@Param() param, @Res() response: Response) {
-    const id = param["id"];
-
-    return this.paymentControllerService
-      .findAllInSchool(id)
-      .then((success: IResponse) => {
-        return response.status(201).json(success);
-      })
-      .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
 
@@ -79,15 +59,16 @@ export class PaymentController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
+
+  ////////////////////////////////////////
+  //          POST FUNCTIONS
+  ////////////////////////////////////////
 
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
@@ -99,15 +80,16 @@ export class PaymentController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
+
+  ////////////////////////////////////////
+  //          PUT FUNCTIONS
+  ////////////////////////////////////////
 
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
@@ -125,15 +107,16 @@ export class PaymentController {
         return response.status(200).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
+
+  ////////////////////////////////////////
+  //          DELETE FUNCTIONS
+  ////////////////////////////////////////
 
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
@@ -147,13 +130,33 @@ export class PaymentController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
+
+  ////////////////////////////////////////
+  //          GET PARENT FUNCTIONS
+  ////////////////////////////////////////
+
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Get("school/:id")
+  async findAllInSchool(@Param() param, @Res() response: Response) {
+    const id = param["id"];
+
+    return this.paymentControllerService
+      .findAllInSchool(id)
+      .then((success: IResponse) => {
+        return response.status(201).json(success);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
 }

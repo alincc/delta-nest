@@ -25,6 +25,11 @@ export class SubjectController {
   constructor(
     private readonly subjectControllerService: SubjectControllerService
   ) {}
+
+  ////////////////////////////////////////
+  //          GET FUNCTIONS
+  ////////////////////////////////////////
+
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Get()
@@ -35,35 +40,10 @@ export class SubjectController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
-      });
-  }
-
-  @Roles("PRINCIPAL_ROLE")
-  @UseGuards(AuthGuard("jwt"), RolesGuard)
-  @Get("school/:id")
-  async findAllInSchool(@Param() param, @Res() response: Response) {
-    const id = param["id"];
-
-    return this.subjectControllerService
-      .findAllInSchool(id)
-      .then((success: IResponse) => {
-        return response.status(201).json(success);
-      })
-      .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
 
@@ -79,15 +59,16 @@ export class SubjectController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
+
+  ////////////////////////////////////////
+  //          POST FUNCTIONS
+  ////////////////////////////////////////
 
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
@@ -102,15 +83,16 @@ export class SubjectController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
+
+  ////////////////////////////////////////
+  //          PUT FUNCTIONS
+  ////////////////////////////////////////
 
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
@@ -128,15 +110,16 @@ export class SubjectController {
         return response.status(200).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
+
+  ////////////////////////////////////////
+  //          DELETE FUNCTIONS
+  ////////////////////////////////////////
 
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
@@ -150,13 +133,55 @@ export class SubjectController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
+
+  ////////////////////////////////////////
+  //          GET PARENT FUNCTIONS
+  ////////////////////////////////////////
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Get("school/:id")
+  async findAllInSchool(@Param() param, @Res() response: Response) {
+    const id = param["id"];
+
+    return this.subjectControllerService
+      .findAllInSchool(id)
+      .then((success: IResponse) => {
+        return response.status(201).json(success);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
+
+  ////////////////////////////////////////
+  //          GET VALIDATION FUNCTIONS
+  ////////////////////////////////////////
+
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Get("folio/:folio")
+  async checkFolio(@Param() param, @Res() response: Response) {
+    const folio = param["folio"];
+
+    return this.subjectControllerService
+      .checkFolio(folio)
+      .then((success: IResponse) => {
+        return response.status(201).json(success);
+      })
+      .catch(error => {
+        return response.status(404).json({
+          status: HttpStatus.NOT_FOUND,
+          error: "Folio Not Found"
+        });
       });
   }
 }

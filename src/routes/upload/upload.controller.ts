@@ -64,8 +64,6 @@ export class UploadController {
       });
   }
 
-  @Roles("PRINCIPAL_ROLE", "STUDENT_ROLE")
-  @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Get("avatar/:file")
   async serveAvatar(@Param() params, @Res() response: Response): Promise<any> {
     const file = params.file;

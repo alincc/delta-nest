@@ -17,12 +17,15 @@ export class MaintenanceController {
   constructor(
     private readonly maintenanceControllerService: MaintenanceControllerService
   ) {}
-  @Roles("PRINCIPAL_ROLE")
-  @UseGuards(AuthGuard("jwt"), RolesGuard)
-  @Delete()
-  resetDatabase(@Res() response: Response) {
+
+  ////////////////////////////////////////
+  //          GET FUNCTIONS
+  ////////////////////////////////////////
+
+  @Get()
+  getCurrentState(@Res() response: Response) {
     this.maintenanceControllerService
-      .resetDataBase()
+      .getCurrentState()
       .then(success => {
         return response.status(200).json(success);
       })
@@ -34,10 +37,16 @@ export class MaintenanceController {
       });
   }
 
-  @Get()
-  getCurrentState(@Res() response: Response) {
+  ////////////////////////////////////////
+  //          DELETE FUNCTIONS
+  ////////////////////////////////////////
+
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Delete()
+  resetDatabase(@Res() response: Response) {
     this.maintenanceControllerService
-      .getCurrentState()
+      .resetDataBase()
       .then(success => {
         return response.status(200).json(success);
       })

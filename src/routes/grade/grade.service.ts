@@ -16,8 +16,8 @@ export class GradeControllerService {
         errors: false,
         statusCode: 200,
         message: "Grades Found",
-        data: { count: document.length },
-        ...document
+        count: document.length,
+        data: document
       };
     });
   }
@@ -30,8 +30,8 @@ export class GradeControllerService {
           errors: false,
           statusCode: 200,
           message: "Grades Found",
-          data: { count: document.length },
-          ...document
+          count: document.length,
+          data: document
         };
       });
   }

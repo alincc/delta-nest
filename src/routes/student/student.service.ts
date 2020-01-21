@@ -20,8 +20,8 @@ export class StudentControllerService {
         errors: false,
         statusCode: 200,
         message: "Users Found",
-        data: { count: document.length },
-        ...document
+        count: document.length,
+        data: document
       };
     });
   }
@@ -34,8 +34,22 @@ export class StudentControllerService {
           errors: false,
           statusCode: 200,
           message: "Users Found",
-          data: { count: document.length },
-          ...document
+          count: document.length,
+          data: document
+        };
+      });
+  }
+
+  public async findAllInGroup(groupId: string): Promise<IResponse> {
+    return this.userService
+      .findAllInGroup(groupId)
+      .then((document: IUser[]) => {
+        return {
+          errors: false,
+          statusCode: 200,
+          message: "Users Found",
+          count: document.length,
+          data: document
         };
       });
   }

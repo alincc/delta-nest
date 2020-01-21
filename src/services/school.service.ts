@@ -20,10 +20,7 @@ export class SchoolService {
   }
 
   public async findById(id: string): Promise<ISchool> {
-    return await await this.schoolModel
-      .findById(id)
-      .populate({ path: "principals", select: "-password" })
-      .exec();
+    return await await this.schoolModel.findById(id).exec();
   }
 
   public async findOne(name: string): Promise<ISchool> {

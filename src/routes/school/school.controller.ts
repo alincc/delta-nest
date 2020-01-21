@@ -4,7 +4,6 @@ import {
   Post,
   Body,
   HttpStatus,
-  HttpException,
   Res,
   Get,
   Param,
@@ -26,8 +25,10 @@ export class SchoolController {
     private readonly schoolControllerService: SchoolControllerService
   ) {}
 
-  @Roles("PRINCIPAL_ROLE")
-  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  ////////////////////////////////////////
+  //          GET FUNCTIONS
+  ////////////////////////////////////////
+
   @Get()
   async findAll(@Res() response: Response) {
     return this.schoolControllerService
@@ -36,35 +37,10 @@ export class SchoolController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
-      });
-  }
-
-  @Roles("PRINCIPAL_ROLE")
-  @UseGuards(AuthGuard("jwt"), RolesGuard)
-  @Get("principal/:id")
-  async findAllInPrincipal(@Param() param, @Res() response: Response) {
-    const id = param["id"];
-
-    return this.schoolControllerService
-      .findAllInPrincipal(id)
-      .then((success: IResponse) => {
-        return response.status(201).json(success);
-      })
-      .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
 
@@ -80,15 +56,16 @@ export class SchoolController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
+
+  ////////////////////////////////////////
+  //          POST FUNCTIONS
+  ////////////////////////////////////////
 
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
@@ -100,15 +77,16 @@ export class SchoolController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
+
+  ////////////////////////////////////////
+  //          PUT FUNCTIONS
+  ////////////////////////////////////////
 
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
@@ -126,15 +104,16 @@ export class SchoolController {
         return response.status(200).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
+
+  ////////////////////////////////////////
+  //          DELETE FUNCTIONS
+  ////////////////////////////////////////
 
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
@@ -148,13 +127,33 @@ export class SchoolController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
+
+  ////////////////////////////////////////
+  //          GET PARENT FUNCTIONS
+  ////////////////////////////////////////
+
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Get("principal/:id")
+  async findAllInPrincipal(@Param() param, @Res() response: Response) {
+    const id = param["id"];
+
+    return this.schoolControllerService
+      .findAllInPrincipal(id)
+      .then((success: IResponse) => {
+        return response.status(201).json(success);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
 }

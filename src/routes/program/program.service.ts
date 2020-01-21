@@ -15,8 +15,8 @@ export class ProgramControllerService {
         errors: false,
         statusCode: 200,
         message: "Programs Found",
-        data: { count: document.length },
-        ...document
+        count: document.length,
+        data: document
       };
     });
   }
@@ -29,8 +29,8 @@ export class ProgramControllerService {
           errors: false,
           statusCode: 200,
           message: "Programs Found",
-          data: { count: document.length },
-          ...document
+          count: document.length,
+          data: document
         };
       });
   }

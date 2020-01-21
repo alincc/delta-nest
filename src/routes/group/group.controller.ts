@@ -35,13 +35,10 @@ export class GroupController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
 
@@ -57,13 +54,10 @@ export class GroupController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
 
@@ -79,13 +73,10 @@ export class GroupController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
 
@@ -99,13 +90,10 @@ export class GroupController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
 
@@ -125,13 +113,10 @@ export class GroupController {
         return response.status(200).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
 
@@ -147,13 +132,10 @@ export class GroupController {
         return response.status(201).json(success);
       })
       .catch(error => {
-        throw new HttpException(
-          {
-            status: HttpStatus.BAD_REQUEST,
-            error
-          },
-          400
-        );
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
       });
   }
 }

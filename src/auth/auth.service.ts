@@ -47,9 +47,12 @@ export class AuthService {
   }
 
   async checkUsername(username: string) {
-    return this.userService.findByUsername(username).then((document: IUser) => {
-      let data = _.omit(document.toObject(), "password");
+    return this.userService.findOne(username).then((document: IUser) => {
+      if (!document) {
+        throw new Error();
+      }
 
+      let data = _.omit(document.toObject(), "password");
       return {
         errors: false,
         statusCode: 201,

@@ -19,20 +19,9 @@ import { Response } from "express";
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get(":username")
-  async checkUsername(@Param() param, @Res() response: Response) {
-    this.authService
-      .checkUsername(param.username)
-      .then(success => {
-        return response.status(200).json(success);
-      })
-      .catch(() => {
-        return response.status(404).json({
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: "Student Not Found"
-        });
-      });
-  }
+  ////////////////////////////////////////
+  //          POST FUNCTIONS
+  ////////////////////////////////////////
 
   @UseGuards(AuthGuard("local"))
   @Post("login")
@@ -62,6 +51,25 @@ export class AuthController {
         return response.status(500).json({
           status: HttpStatus.INTERNAL_SERVER_ERROR,
           error: "Student Login Failed Something is Wrong"
+        });
+      });
+  }
+
+  ////////////////////////////////////////
+  //          GET VALIDATION FUNCTIONS
+  ////////////////////////////////////////
+
+  @Get(":username")
+  async checkUsername(@Param() param, @Res() response: Response) {
+    this.authService
+      .checkUsername(param.username)
+      .then(success => {
+        return response.status(200).json(success);
+      })
+      .catch(() => {
+        return response.status(404).json({
+          status: HttpStatus.NOT_FOUND,
+          error: "Student Not Found"
         });
       });
   }

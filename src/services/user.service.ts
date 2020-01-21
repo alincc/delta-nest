@@ -16,7 +16,17 @@ export class UserService {
   async findAllInSchool(schoolId: string): Promise<IUser[]> {
     return await this.userModel
       .find({
+        role: "STUDENT_ROLE",
         schools: Types.ObjectId(schoolId)
+      })
+      .exec();
+  }
+
+  async findAllInGroup(groupId: string): Promise<IUser[]> {
+    return await this.userModel
+      .find({
+        role: "STUDENT_ROLE",
+        group: Types.ObjectId(groupId)
       })
       .exec();
   }
@@ -35,10 +45,6 @@ export class UserService {
       .exec();
   }
 
-  public async findByUsername(username: string): Promise<IUser> {
-    return await this.userModel.findOne({ username: username }).exec();
-  }
-
   public async createOneOrMany(
     user: IUser | IUser[]
   ): Promise<IUser | IUser[]> {
@@ -52,7 +58,6 @@ export class UserService {
         runValidators: true,
         upsert: true
       })
-      .populate("schools")
       .exec();
   }
 

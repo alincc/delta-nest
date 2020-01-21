@@ -16,8 +16,8 @@ export class SubjectControllerService {
         errors: false,
         statusCode: 200,
         message: "Subjects Found",
-        data: { count: document.length },
-        ...document
+        count: document.length,
+        data: document
       };
     });
   }
@@ -30,10 +30,24 @@ export class SubjectControllerService {
           errors: false,
           statusCode: 200,
           message: "Subjects Found",
-          data: { count: document.length },
-          ...document
+          count: document.length,
+          data: document
         };
       });
+  }
+
+  public async checkFolio(folio: string): Promise<IResponse> {
+    return this.subjectService.findOne(folio).then((document: ISubject) => {
+      if (!document) {
+        throw new Error();
+      }
+      return {
+        errors: false,
+        statusCode: 200,
+        message: "Subject Found",
+        data: document
+      };
+    });
   }
 
   public async findById(id: string): Promise<IResponse> {
@@ -47,9 +61,9 @@ export class SubjectControllerService {
     });
   }
 
-  public async createOne(flight: ISubject): Promise<IResponse> {
+  public async createOne(subject: ISubject): Promise<IResponse> {
     return this.subjectService
-      .createOneOrMany(flight)
+      .createOneOrMany(subject)
       .then((document: ISubject) => {
         return {
           errors: false,

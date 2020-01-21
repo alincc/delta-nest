@@ -16,7 +16,7 @@ export class SubjectService {
   async findAllInSchool(schoolId: string): Promise<ISubject[]> {
     return await this.subjectModel
       .find({
-        schools: Types.ObjectId(schoolId)
+        school: Types.ObjectId(schoolId)
       })
       .exec();
   }
@@ -65,12 +65,22 @@ export class SubjectService {
 
   public async deleteOne(id: string) {
     return await this.subjectModel
-      .deleteOne({ _id: Types.ObjectId(id) })
-      .exec();
+      .findById(id)
+      .exec()
+      .then((document: ISubject) => {
+        document.remove();
+      });
   }
 
   public async deleteMany(conditions: ISubject) {
-    return await this.subjectModel.deleteMany(conditions).exec();
+    return await this.subjectModel
+      .find(conditions)
+      .exec()
+      .then((documents: ISubject[]) => {
+        return documents.forEach(document => {
+          document.remove();
+        });
+      });
   }
 
   public async deleteAll() {

@@ -16,8 +16,8 @@ export class PaymentControllerService {
         errors: false,
         statusCode: 200,
         message: "Payments Found",
-        data: { count: document.length },
-        ...document
+        count: document.length,
+        data: document
       };
     });
   }
@@ -30,8 +30,8 @@ export class PaymentControllerService {
           errors: false,
           statusCode: 200,
           message: "Payments Found",
-          data: { count: document.length },
-          ...document
+          count: document.length,
+          data: document
         };
       });
   }

@@ -161,4 +161,27 @@ export class ProgramController {
         });
       });
   }
+
+  ////////////////////////////////////////
+  //          GET VALIDATION FUNCTIONS
+  ////////////////////////////////////////
+
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Get("folio/:folio")
+  async checkFolio(@Param() param, @Res() response: Response) {
+    const folio = param["folio"];
+
+    return this.programControllerService
+      .checkFolio(folio)
+      .then((success: IResponse) => {
+        return response.status(201).json(success);
+      })
+      .catch(error => {
+        return response.status(404).json({
+          status: HttpStatus.NOT_FOUND,
+          error: "Folio Not Found"
+        });
+      });
+  }
 }

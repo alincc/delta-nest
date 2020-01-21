@@ -36,6 +36,20 @@ export class GradeControllerService {
       });
   }
 
+  public async findAllInSubject(schoolId: string): Promise<IResponse> {
+    return this.gradeService
+      .findAllInSubject(schoolId)
+      .then((document: IGrade[]) => {
+        return {
+          errors: false,
+          statusCode: 200,
+          message: "Grades Found",
+          count: document.length,
+          data: document
+        };
+      });
+  }
+
   public async findById(id: string): Promise<IResponse> {
     return this.gradeService.findById(id).then((document: IGrade) => {
       return {

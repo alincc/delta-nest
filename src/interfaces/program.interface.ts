@@ -8,6 +8,10 @@ export interface IProgram extends Document {
   description?: string;
   avatarUrl?: string;
   email?: string;
+  inscription?: number;
+  monthlyRate?: number;
+  startDate?: number;
+  endDate?: number;
   subjects?: ISubject[] | Types.ObjectId[];
   school?: ISchool | Types.ObjectId;
   createdAt?: number;

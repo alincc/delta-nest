@@ -20,7 +20,14 @@ export class GradeService {
   async findAllInSchool(schoolId: string): Promise<IGrade[]> {
     return await this.gradeModel
       .find({
-        schools: Types.ObjectId(schoolId)
+        school: Types.ObjectId(schoolId)
+      })
+      .exec();
+  }
+  async findAllInSubject(schoolId: string): Promise<IGrade[]> {
+    return await this.gradeModel
+      .find({
+        subject: Types.ObjectId(schoolId)
       })
       .exec();
   }

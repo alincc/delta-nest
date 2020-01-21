@@ -17,29 +17,29 @@ GradeSchema.pre("remove", function(next) {
 
   return model("school")
     .updateMany(
-      { gardes: Types.ObjectId(document._id) },
+      { grades: Types.ObjectId(document._id) },
       {
         $pull: {
-          gardes: Types.ObjectId(document._id)
+          grades: Types.ObjectId(document._id)
         }
       }
     )
     .then(() => {
       return model("subject").updateMany(
-        { gardes: Types.ObjectId(document._id) },
+        { grades: Types.ObjectId(document._id) },
         {
           $pull: {
-            gardes: Types.ObjectId(document._id)
+            grades: Types.ObjectId(document._id)
           }
         }
       );
     })
     .then(() => {
       return model("user").updateMany(
-        { gardes: Types.ObjectId(document._id) },
+        { grades: Types.ObjectId(document._id) },
         {
           $pull: {
-            gardes: Types.ObjectId(document._id)
+            grades: Types.ObjectId(document._id)
           }
         }
       );

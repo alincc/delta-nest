@@ -6,7 +6,6 @@ import {
   Res,
   Get,
   Param,
-  HttpException,
   HttpStatus,
   Delete,
   Put

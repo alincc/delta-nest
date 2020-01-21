@@ -35,6 +35,20 @@ export class ProgramControllerService {
       });
   }
 
+  public async checkFolio(folio: string): Promise<IResponse> {
+    return this.programService.findOne(folio).then((document: IProgram) => {
+      if (!document) {
+        throw new Error();
+      }
+      return {
+        errors: false,
+        statusCode: 200,
+        message: "Program Found",
+        data: document
+      };
+    });
+  }
+
   public async findById(id: string): Promise<IResponse> {
     return this.programService.findById(id).then((document: IProgram) => {
       return {

@@ -8,7 +8,8 @@ import {
   Param,
   HttpStatus,
   Delete,
-  Put
+  Put,
+  Headers
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { Roles } from "src/guards/roles.decorator";
@@ -29,9 +30,9 @@ export class ProgramController {
   //          GET FUNCTIONS
   ////////////////////////////////////////
 
+  @Get()
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
-  @Get()
   async findAll(@Res() response: Response) {
     return this.programControllerService
       .findAll()
@@ -46,9 +47,9 @@ export class ProgramController {
       });
   }
 
+  @Get(":id")
   @Roles("PRINCIPAL_ROLE", "STUDENT_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
-  @Get(":id")
   async findById(@Param() param, @Res() response: Response) {
     const id = param["id"];
 
@@ -69,9 +70,9 @@ export class ProgramController {
   //          POST FUNCTIONS
   ////////////////////////////////////////
 
+  @Post()
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
-  @Post()
   async createOne(
     @Body() program: ReceiveProgramDto,
     @Res() response: Response
@@ -93,9 +94,9 @@ export class ProgramController {
   //          PUT FUNCTIONS
   ////////////////////////////////////////
 
+  @Put(":id")
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
-  @Put(":id")
   updateOne(
     @Param() param,
     @Body() program: ReceiveProgramDto,
@@ -116,32 +117,13 @@ export class ProgramController {
       });
   }
 
-  @Roles("PRINCIPAL_ROLE")
-  @UseGuards(AuthGuard("jwt"), RolesGuard)
-  @Put(":id/subject/:subjectId")
-  addSubject(@Param() param, @Res() response: Response) {
-    const id = param["id"];
-    const subjectId = param["subjectId"];
-    this.programControllerService
-      .addSubject(id, subjectId)
-      .then((success: IResponse) => {
-        return response.status(200).json(success);
-      })
-      .catch(error => {
-        return response.status(400).json({
-          status: HttpStatus.BAD_REQUEST,
-          error
-        });
-      });
-  }
-
   ////////////////////////////////////////
   //          DELETE FUNCTIONS
   ////////////////////////////////////////
 
+  @Delete(":id")
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
-  @Delete(":id")
   async deleteOne(@Param() param, @Res() response: Response) {
     const id = param["id"];
 
@@ -158,31 +140,13 @@ export class ProgramController {
       });
   }
 
-  @Roles("PRINCIPAL_ROLE")
-  @UseGuards(AuthGuard("jwt"), RolesGuard)
-  @Delete(":id/subject/:subjectId")
-  removeSubject(@Param() param, @Res() response: Response) {
-    const id = param["id"];
-    const subjectId = param["subjectId"];
-    this.programControllerService
-      .removeSubject(id, subjectId)
-      .then((success: IResponse) => {
-        return response.status(200).json(success);
-      })
-      .catch(error => {
-        return response.status(400).json({
-          status: HttpStatus.BAD_REQUEST,
-          error
-        });
-      });
-  }
   ////////////////////////////////////////
   //          GET PARENT FUNCTIONS
   ////////////////////////////////////////
 
+  @Get("school/:id")
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
-  @Get("school/:id")
   async findAllInSchool(@Param() param, @Res() response: Response) {
     const id = param["id"];
 
@@ -200,12 +164,55 @@ export class ProgramController {
   }
 
   ////////////////////////////////////////
+  //          CRUD CHILD FUNCTIONS
+  ////////////////////////////////////////
+  @Put(":id/subject/:subjectId")
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  addSubject(@Param() param, @Res() response: Response) {
+    const id = param["id"];
+    const subjectId = param["subjectId"];
+
+    this.programControllerService
+      .addSubject(id, subjectId)
+      .then((success: IResponse) => {
+        return response.status(200).json(success);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
+
+  @Delete(":id/subject/:subjectId")
+  // @Roles("PRINCIPAL_ROLE")
+  // @UseGuards(AuthGuard("jwt"), RolesGuard)
+  removeSubject(@Param() param, @Res() response: Response) {
+    const id = param["id"];
+    const subjectId = param["subjectId"];
+
+    this.programControllerService
+      .removeSubject(id, subjectId)
+      .then((success: IResponse) => {
+        return response.status(200).json(success);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
+
+  ////////////////////////////////////////
   //          GET VALIDATION FUNCTIONS
   ////////////////////////////////////////
 
+  @Get("folio/:folio")
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
-  @Get("folio/:folio")
   async checkFolio(@Param() param, @Res() response: Response) {
     const folio = param["folio"];
 

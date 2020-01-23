@@ -25,7 +25,7 @@ export const UserSchema = new Schema({
   graduated: { type: Boolean, default: false },
   gender: { type: String, default: null },
   lastSchool: { type: String, default: null },
-  adress: {
+  address: {
     state: { type: String, default: null },
     municipality: { type: String, default: null },
     colony: { type: String, default: null },

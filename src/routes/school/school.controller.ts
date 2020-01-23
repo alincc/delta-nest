@@ -8,7 +8,8 @@ import {
   Get,
   Param,
   Delete,
-  Put
+  Put,
+  Headers
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { Roles } from "src/guards/roles.decorator";

@@ -51,22 +51,22 @@ export class ProgramService {
       .exec();
   }
 
-  public async addChild(id: string, pushProperties: IProgram) {
+  public async addChild(id: string, pushProperties: { subjects?: any }) {
     return await this.programModel.findOneAndUpdate(
       { _id: Types.ObjectId(id) },
       {
-        $push: { pushProperties }
+        $push: pushProperties
       },
       { new: true }
     );
   }
 
-  public async removeChild(id: string, pullProperties: IProgram) {
+  public async removeChild(id: string, pullProperties: { subjects?: any }) {
     return await this.programModel
       .findOneAndUpdate(
         { _id: Types.ObjectId(id) },
         {
-          $pullAll: { pullProperties }
+          $pull: pullProperties
         },
         { new: true }
       )
@@ -75,12 +75,22 @@ export class ProgramService {
 
   public async deleteOne(id: string) {
     return await this.programModel
-      .deleteOne({ _id: Types.ObjectId(id) })
-      .exec();
+      .findById(id)
+      .exec()
+      .then((document: IProgram) => {
+        document.remove();
+      });
   }
 
   public async deleteMany(conditions: IProgram) {
-    return await this.programModel.deleteMany(conditions).exec();
+    return await this.programModel
+      .find(conditions)
+      .exec()
+      .then((documents: IProgram[]) => {
+        return documents.forEach(document => {
+          document.remove();
+        });
+      });
   }
 
   public async deleteAll() {

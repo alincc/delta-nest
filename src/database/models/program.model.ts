@@ -48,6 +48,21 @@ ProgramSchema.pre("remove", function(next) {
     });
 });
 
+ProgramSchema.post("findOneAndUpdate", function(document: IProgram, next) {
+  let operation = Object.keys(this._update)[0];
+  let property = Object.keys(this._update[operation])[0];
+
+  return model("subject")
+    .findByIdAndUpdate(this._update[operation][property], {
+      [operation]: {
+        programs: Types.ObjectId(document._id)
+      }
+    })
+    .then(() => {
+      return next();
+    });
+});
+
 ProgramSchema.post("save", function(document: IProgram, next) {
   return model("school")
     .findByIdAndUpdate(document.school, {

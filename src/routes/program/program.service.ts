@@ -86,25 +86,25 @@ export class ProgramControllerService {
   }
 
   public async addSubject(id: string, subjectId: string): Promise<IResponse> {
-    let program: IProgram = { subjects: Types.ObjectId(subjectId) } as IProgram;
-    return this.programService.addChild(id, program).then((document: any) => {
-      document as IProgram;
-      return {
-        errors: false,
-        statusCode: 200,
-        message: "Program Updated",
-        data: document
-      };
-    });
+    return this.programService
+      .addChild(id, { subjects: Types.ObjectId(subjectId) })
+      .then((document: any) => {
+        document as IProgram;
+        return {
+          errors: false,
+          statusCode: 200,
+          message: "Program Updated",
+          data: document
+        };
+      });
   }
 
   public async removeSubject(
     id: string,
     subjectId: string
   ): Promise<IResponse> {
-    let program: IProgram = { subjects: Types.ObjectId(subjectId) } as IProgram;
     return this.programService
-      .removeChild(id, program)
+      .removeChild(id, { subjects: Types.ObjectId(subjectId) })
       .then((document: any) => {
         document as IProgram;
         return {

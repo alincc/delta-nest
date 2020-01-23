@@ -26,9 +26,12 @@ export class StudentControllerService {
     });
   }
 
-  public async findAllInSchool(schoolId: string): Promise<IResponse> {
+  public async findAllInSchool(
+    schoolId: string,
+    flags?: { graduated?: boolean }
+  ): Promise<IResponse> {
     return this.userService
-      .findAllInSchool(schoolId)
+      .findAllInSchool({ ...{ school: schoolId }, ...flags })
       .then((document: IUser[]) => {
         return {
           errors: false,

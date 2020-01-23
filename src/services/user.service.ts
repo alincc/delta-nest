@@ -13,12 +13,17 @@ export class UserService {
     return await this.userModel.find().exec();
   }
 
-  async findAllInSchool(schoolId: string): Promise<IUser[]> {
+  async findAllInSchool(options: {
+    school: string;
+    graduated?: boolean;
+  }): Promise<IUser[]> {
     return await this.userModel
       .find({
         role: "STUDENT_ROLE",
-        schools: Types.ObjectId(schoolId)
+        graduated: options.graduated,
+        schools: Types.ObjectId(options.school)
       })
+      .populate("group")
       .exec();
   }
 

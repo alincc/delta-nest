@@ -4,11 +4,15 @@ import { IResponse } from "src/interfaces/response.interface";
 import { IProgram } from "src/interfaces/program.interface";
 
 import * as _ from "lodash";
+import { Types } from "mongoose";
 
 @Injectable()
 export class ProgramControllerService {
   constructor(private readonly programService: ProgramService) {}
 
+  ////////////////////////////////////////
+  //          FIND FUNCTIONS
+  ////////////////////////////////////////
   public async findAll(): Promise<IResponse> {
     return this.programService.findAll().then((document: IProgram[]) => {
       return {
@@ -35,20 +39,6 @@ export class ProgramControllerService {
       });
   }
 
-  public async checkFolio(folio: string): Promise<IResponse> {
-    return this.programService.findOne(folio).then((document: IProgram) => {
-      if (!document) {
-        throw new Error();
-      }
-      return {
-        errors: false,
-        statusCode: 200,
-        message: "Program Found",
-        data: document
-      };
-    });
-  }
-
   public async findById(id: string): Promise<IResponse> {
     return this.programService.findById(id).then((document: IProgram) => {
       return {
@@ -60,6 +50,9 @@ export class ProgramControllerService {
     });
   }
 
+  ////////////////////////////////////////
+  //          CREATE FUNCTIONS
+  ////////////////////////////////////////
   public async createOne(group: IProgram): Promise<IResponse> {
     return this.programService
       .createOneOrMany(group)
@@ -73,6 +66,9 @@ export class ProgramControllerService {
       });
   }
 
+  ////////////////////////////////////////
+  //          UPDATE FUNCTIONS
+  ////////////////////////////////////////
   public async updateOne(id: string, group: IProgram): Promise<IResponse> {
     const sanitizedGroup = _.omit(group, ["school", "subjects"]);
 
@@ -89,6 +85,40 @@ export class ProgramControllerService {
       });
   }
 
+  public async addSubject(id: string, subjectId: string): Promise<IResponse> {
+    let program: IProgram = { subjects: Types.ObjectId(subjectId) } as IProgram;
+    return this.programService.addChild(id, program).then((document: any) => {
+      document as IProgram;
+      return {
+        errors: false,
+        statusCode: 200,
+        message: "Program Updated",
+        data: document
+      };
+    });
+  }
+
+  public async removeSubject(
+    id: string,
+    subjectId: string
+  ): Promise<IResponse> {
+    let program: IProgram = { subjects: Types.ObjectId(subjectId) } as IProgram;
+    return this.programService
+      .removeChild(id, program)
+      .then((document: any) => {
+        document as IProgram;
+        return {
+          errors: false,
+          statusCode: 200,
+          message: "Program Updated",
+          data: document
+        };
+      });
+  }
+
+  ////////////////////////////////////////
+  //          DELETE FUNCTIONS
+  ////////////////////////////////////////
   public async deleteOne(id: string): Promise<IResponse> {
     return this.programService.deleteOne(id).then(() => {
       return {
@@ -96,6 +126,23 @@ export class ProgramControllerService {
         statusCode: 200,
         message: "Program deleted",
         data: null
+      };
+    });
+  }
+
+  ////////////////////////////////////////
+  //          VALIDATION FUNCTIONS
+  ////////////////////////////////////////
+  public async checkFolio(folio: string): Promise<IResponse> {
+    return this.programService.findOne(folio).then((document: IProgram) => {
+      if (!document) {
+        throw new Error();
+      }
+      return {
+        errors: false,
+        statusCode: 200,
+        message: "Program Found",
+        data: document
       };
     });
   }

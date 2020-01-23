@@ -12,7 +12,7 @@ export interface IProgram extends Document {
   monthlyRate?: number;
   startDate?: number;
   endDate?: number;
-  subjects?: ISubject[] | Types.ObjectId[];
+  subjects?: ISubject[] | Types.ObjectId[] | Types.ObjectId;
   school?: ISchool | Types.ObjectId;
   createdAt?: number;
   updatedAt?: number;

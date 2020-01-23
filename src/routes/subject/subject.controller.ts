@@ -161,6 +161,24 @@ export class SubjectController {
       });
   }
 
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Get("program/:id")
+  async findAllInProgram(@Param() param, @Res() response: Response) {
+    const id = param["id"];
+
+    return this.subjectControllerService
+      .findAllInProgram(id)
+      .then((success: IResponse) => {
+        return response.status(201).json(success);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
   ////////////////////////////////////////
   //          GET VALIDATION FUNCTIONS
   ////////////////////////////////////////

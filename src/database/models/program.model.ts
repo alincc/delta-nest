@@ -34,6 +34,16 @@ ProgramSchema.pre("remove", function(next) {
       }
     )
     .then(() => {
+      return model("subject").updateMany(
+        { programs: Types.ObjectId(document._id) },
+        {
+          $pull: {
+            programs: Types.ObjectId(document._id)
+          }
+        }
+      );
+    })
+    .then(() => {
       return next();
     });
 });

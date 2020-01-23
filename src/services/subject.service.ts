@@ -21,6 +21,13 @@ export class SubjectService {
       .exec();
   }
 
+  async findAllInProgram(programId: string): Promise<ISubject[]> {
+    return await this.subjectModel
+      .find({
+        programs: Types.ObjectId(programId)
+      })
+      .exec();
+  }
   public async findById(id: string): Promise<ISubject> {
     return await this.subjectModel.findById(id).exec();
   }

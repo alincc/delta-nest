@@ -47,7 +47,9 @@ export class UploadController {
     @Param() param,
     @Res() response: Response
   ) {
-    const avatarUrl = { avatarUrl: `${SERVER_URL}${file.path}` };
+    const avatarUrl = {
+      avatarUrl: `${SERVER_URL}${file.path}`.replace(/\\/g, "/")
+    };
     return this.uploadControllerService
       .updateAvatarUrl(param, avatarUrl)
       .then((success: IResponse) => {

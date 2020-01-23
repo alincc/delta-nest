@@ -7,6 +7,7 @@ import { IPayment } from "./payment.interface";
 import { IProgram } from "./program.interface";
 
 export interface IUser extends Document {
+  enrollmentId?: string;
   role?: string;
   email?: string;
   avatarUrl?: string;
@@ -22,6 +23,7 @@ export interface IUser extends Document {
     state?: string;
     municipality?: string;
     colony?: string;
+    street?: string;
     zipCode?: string;
   };
   emergency?: {
@@ -37,6 +39,7 @@ export interface IUser extends Document {
   payments?: IPayment[] | Types.ObjectId[];
   program?: IProgram | Types.ObjectId;
   schools?: ISchool[] | Types.ObjectId[];
+  enrolled?: number;
   createdAt?: number;
   updatedAt?: number;
 }

@@ -26,7 +26,7 @@ export class ProgramController {
   ) {}
 
   ////////////////////////////////////////
-  //          PUT FUNCTIONS
+  //          GET FUNCTIONS
   ////////////////////////////////////////
 
   @Roles("PRINCIPAL_ROLE")
@@ -116,6 +116,25 @@ export class ProgramController {
       });
   }
 
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Put(":id/subject/:subjectId")
+  addSubject(@Param() param, @Res() response: Response) {
+    const id = param["id"];
+    const subjectId = param["subjectId"];
+    this.programControllerService
+      .addSubject(id, subjectId)
+      .then((success: IResponse) => {
+        return response.status(200).json(success);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
+
   ////////////////////////////////////////
   //          DELETE FUNCTIONS
   ////////////////////////////////////////
@@ -139,6 +158,24 @@ export class ProgramController {
       });
   }
 
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Delete(":id/subject/:subjectId")
+  removeSubject(@Param() param, @Res() response: Response) {
+    const id = param["id"];
+    const subjectId = param["subjectId"];
+    this.programControllerService
+      .removeSubject(id, subjectId)
+      .then((success: IResponse) => {
+        return response.status(200).json(success);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
   ////////////////////////////////////////
   //          GET PARENT FUNCTIONS
   ////////////////////////////////////////

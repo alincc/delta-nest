@@ -16,7 +16,7 @@ export class ProgramService {
   async findAllInSchool(schoolId: string): Promise<IProgram[]> {
     return await this.programModel
       .find({
-        schools: Types.ObjectId(schoolId)
+        school: Types.ObjectId(schoolId)
       })
       .exec();
   }
@@ -25,8 +25,8 @@ export class ProgramService {
     return await this.programModel.findById(id).exec();
   }
 
-  public async findOne(name: string): Promise<IProgram> {
-    return await this.programModel.findOne({ name }).exec();
+  public async findOne(folio: string): Promise<IProgram> {
+    return await this.programModel.findOne({ folio }).exec();
   }
 
   public async createOneOrMany(
@@ -51,10 +51,20 @@ export class ProgramService {
       .exec();
   }
 
-  public async pullMany(conditions: IProgram, pullProperties: IProgram) {
+  public async addChild(id: string, pushProperties: IProgram) {
+    return await this.programModel.findOneAndUpdate(
+      { _id: Types.ObjectId(id) },
+      {
+        $push: { pushProperties }
+      },
+      { new: true }
+    );
+  }
+
+  public async removeChild(id: string, pullProperties: IProgram) {
     return await this.programModel
       .findOneAndUpdate(
-        conditions,
+        { _id: Types.ObjectId(id) },
         {
           $pullAll: { pullProperties }
         },

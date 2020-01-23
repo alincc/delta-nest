@@ -24,7 +24,7 @@ export class PrincipalControllerService {
 
   public async findAllInSchool(schoolId: string): Promise<IResponse> {
     return this.userService
-      .findAllInSchool(schoolId)
+      .findAllInSchool({ school: schoolId })
       .then((document: IUser[]) => {
         return {
           errors: false,

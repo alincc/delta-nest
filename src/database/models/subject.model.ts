@@ -14,6 +14,7 @@ export const SubjectSchema = new Schema({
   email: { type: String, default: null },
   grades: [{ type: Schema.Types.ObjectId, ref: "grade" }],
   school: { type: Schema.Types.ObjectId, ref: "school" },
+  programs: [{ type: Schema.Types.ObjectId, ref: "program" }],
   createdAt: { type: Number, default: Date.now() },
   updatedAt: { type: Number, default: Date.now() }
 });

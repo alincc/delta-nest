@@ -9,7 +9,8 @@ import {
   HttpException,
   HttpStatus,
   Delete,
-  Put
+  Put,
+  Query
 } from "@nestjs/common";
 
 import { AuthGuard } from "@nestjs/passport";
@@ -145,11 +146,18 @@ export class StudentController {
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Get("school/:id")
-  async findAllInSchool(@Param() param, @Res() response: Response) {
+  async findAllInSchool(
+    @Param() param,
+    @Res() response: Response,
+    @Query() query
+  ) {
     const id = param["id"];
+    const flags = {
+      graduated: query.graduated
+    };
 
     return this.studentControllerService
-      .findAllInSchool(id)
+      .findAllInSchool(id, flags)
       .then((success: IResponse) => {
         return response.status(201).json(success);
       })

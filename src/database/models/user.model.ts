@@ -9,6 +9,7 @@ let userRoles = {
 };
 
 export const UserSchema = new Schema({
+  enrollmentId: { type: String, default: null },
   role: { type: String, default: "STUDENT_ROLE", enum: userRoles },
   email: { type: String, default: null },
   avatarUrl: { type: String, default: null },
@@ -28,6 +29,7 @@ export const UserSchema = new Schema({
     state: { type: String, default: null },
     municipality: { type: String, default: null },
     colony: { type: String, default: null },
+    street: { type: String, default: null },
     zipCode: { type: String, default: null }
   },
   emergency: {
@@ -40,6 +42,7 @@ export const UserSchema = new Schema({
     type: String,
     default: `time: 1552744582955, blocks: [], version: "2.11.10"`
   },
+  enrolled: { type: Number, default: Date.now() },
   flights: [{ type: Schema.Types.ObjectId, ref: "flight" }],
   grades: [{ type: Schema.Types.ObjectId, ref: "grade" }],
   group: { type: Schema.Types.ObjectId, ref: "group" },

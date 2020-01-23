@@ -36,6 +36,20 @@ export class SubjectControllerService {
       });
   }
 
+  public async findAllInProgram(programId: string): Promise<IResponse> {
+    return this.subjectService
+      .findAllInProgram(programId)
+      .then((document: ISubject[]) => {
+        return {
+          errors: false,
+          statusCode: 200,
+          message: "Subjects Found",
+          count: document.length,
+          data: document
+        };
+      });
+  }
+
   public async checkFolio(folio: string): Promise<IResponse> {
     return this.subjectService.findOne(folio).then((document: ISubject) => {
       if (!document) {

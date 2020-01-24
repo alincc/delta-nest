@@ -94,7 +94,7 @@ UserSchema.pre("remove", function(next) {
         );
       })
       .then(() => {
-        return model("flights").updateMany(
+        return model("flight").updateMany(
           {
             $or: [
               { enlisted: Types.ObjectId(document._id) },
@@ -129,8 +129,15 @@ UserSchema.post("save", function(document: IUser, next) {
   return model("school")
     .findByIdAndUpdate(document.schools[0], {
       $push: {
-        schools: document._id
+        students: Types.ObjectId(document._id)
       }
+    })
+    .then(() => {
+      return model("group").findByIdAndUpdate(document.group, {
+        $push: {
+          members: Types.ObjectId(document._id)
+        }
+      });
     })
     .then(() => {
       return next();

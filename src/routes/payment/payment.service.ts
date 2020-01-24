@@ -36,6 +36,19 @@ export class PaymentControllerService {
       });
   }
 
+  public async findAllInStudent(studentId: string): Promise<IResponse> {
+    return this.paymentService
+      .findAllInStudent(studentId)
+      .then((document: IPayment[]) => {
+        return {
+          errors: false,
+          statusCode: 200,
+          message: "Payments Found",
+          count: document.length,
+          data: document
+        };
+      });
+  }
   public async findById(id: string): Promise<IResponse> {
     return this.paymentService.findById(id).then((document: IPayment) => {
       return {
@@ -83,6 +96,22 @@ export class PaymentControllerService {
         statusCode: 200,
         message: "Payment deleted",
         data: null
+      };
+    });
+  }
+  ////////////////////////////////////////
+  //          VALIDATION FUNCTIONS
+  ////////////////////////////////////////
+  public async checkFolio(folio: string): Promise<IResponse> {
+    return this.paymentService.findOne(folio).then((document: IPayment) => {
+      if (!document) {
+        throw new Error();
+      }
+      return {
+        errors: false,
+        statusCode: 200,
+        message: "Program Found",
+        data: document
       };
     });
   }

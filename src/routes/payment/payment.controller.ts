@@ -19,6 +19,8 @@ import { IResponse } from "src/interfaces/response.interface";
 import { Response } from "express";
 import { IGroup } from "src/interfaces/group.interface";
 import { PaymentControllerService } from "./payment.service";
+import { ReceivePaymentDto } from "src/dtos/receive-payment.dto";
+import { IPayment } from "src/interfaces/payment.interface";
 
 @Controller("payments")
 export class PaymentController {
@@ -73,9 +75,12 @@ export class PaymentController {
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Post()
-  async createOne(@Body() group: ReceiveGroupDto, @Res() response: Response) {
+  async createOne(
+    @Body() payment: ReceivePaymentDto,
+    @Res() response: Response
+  ) {
     return this.paymentControllerService
-      .createOne((group as unknown) as IGroup)
+      .createOne((payment as unknown) as IPayment)
       .then((success: IResponse) => {
         return response.status(201).json(success);
       })
@@ -156,6 +161,48 @@ export class PaymentController {
         return response.status(400).json({
           status: HttpStatus.BAD_REQUEST,
           error
+        });
+      });
+  }
+
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Get("student/:id")
+  async findAllInStudent(@Param() param, @Res() response: Response) {
+    const id = param["id"];
+
+    return this.paymentControllerService
+      .findAllInStudent(id)
+      .then((success: IResponse) => {
+        return response.status(201).json(success);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
+
+  ////////////////////////////////////////
+  //          GET VALIDATION FUNCTIONS
+  ////////////////////////////////////////
+
+  @Get("folio/:folio")
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  async checkFolio(@Param() param, @Res() response: Response) {
+    const folio = param["folio"];
+
+    return this.paymentControllerService
+      .checkFolio(folio)
+      .then((success: IResponse) => {
+        return response.status(201).json(success);
+      })
+      .catch(error => {
+        return response.status(404).json({
+          status: HttpStatus.NOT_FOUND,
+          error: "Folio Not Found"
         });
       });
   }

@@ -20,7 +20,7 @@ export const PaymentSchema = new Schema({
   updatedAt: { type: Number, default: Date.now() }
 });
 
-ProgramSchema.pre("remove", function(next) {
+PaymentSchema.pre("remove", function(next) {
   let document: IProgram = this;
 
   return model("school")
@@ -47,17 +47,17 @@ ProgramSchema.pre("remove", function(next) {
     });
 });
 
-ProgramSchema.post("save", function(document: IPayment, next) {
+PaymentSchema.post("save", function(document: IPayment, next) {
   return model("school")
     .findByIdAndUpdate(document.school, {
       $push: {
-        payments: document._id
+        payments: Types.ObjectId(document._id)
       }
     })
     .then(() => {
       return model("user").findByIdAndUpdate(document.student, {
         $push: {
-          payments: document._id
+          payments: Types.ObjectId(document._id)
         }
       });
     })

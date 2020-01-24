@@ -24,7 +24,13 @@ export class PaymentService {
       })
       .exec();
   }
-
+  async findAllInStudent(studentId: string): Promise<IPayment[]> {
+    return await this.paymentModel
+      .find({
+        student: Types.ObjectId(studentId)
+      })
+      .exec();
+  }
   public async findOne(folio: string): Promise<IPayment> {
     return await this.paymentModel.findOne({ folio }).exec();
   }

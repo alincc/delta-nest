@@ -126,20 +126,32 @@ UserSchema.pre("remove", function(next) {
 });
 
 UserSchema.post("save", function(document: IUser, next) {
-  return model("school")
-    .findByIdAndUpdate(document.schools[0], {
-      $push: {
-        students: Types.ObjectId(document._id)
-      }
-    })
-    .then(() => {
-      return model("group").findByIdAndUpdate(document.group, {
+  if (document.role == "PRINCIPAL_ROLE") {
+    return model("school")
+      .findByIdAndUpdate(document.schools[0], {
         $push: {
-          members: Types.ObjectId(document._id)
+          principals: Types.ObjectId(document._id)
         }
+      })
+      .then(() => {
+        return next();
       });
-    })
-    .then(() => {
-      return next();
-    });
+  } else {
+    return model("school")
+      .findByIdAndUpdate(document.schools[0], {
+        $push: {
+          students: Types.ObjectId(document._id)
+        }
+      })
+      .then(() => {
+        return model("group").findByIdAndUpdate(document.group, {
+          $push: {
+            members: Types.ObjectId(document._id)
+          }
+        });
+      })
+      .then(() => {
+        return next();
+      });
+  }
 });

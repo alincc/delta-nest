@@ -43,7 +43,7 @@ GroupSchema.post("save", function(document: IGroup, next) {
   return model("school")
     .findByIdAndUpdate(document.school, {
       $push: {
-        groups: document._id
+        groups: Types.ObjectId(document._id)
       }
     })
     .then(() => {

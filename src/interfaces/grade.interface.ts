@@ -4,8 +4,6 @@ import { ISubject } from "./subject.iterface";
 import { ISchool } from "./school.interface";
 
 export interface IGrade extends Document {
-  name?: string;
-  description?: string;
   grade?: number;
   student?: IUser | Types.ObjectId;
   subject?: ISubject | Types.ObjectId;

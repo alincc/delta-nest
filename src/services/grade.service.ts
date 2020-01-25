@@ -29,11 +29,17 @@ export class GradeService {
       .find({
         subject: Types.ObjectId(schoolId)
       })
+      .populate("student")
       .exec();
   }
 
-  public async findOne(name: string): Promise<IGrade> {
-    return await this.gradeModel.findOne({ name }).exec();
+  async findAllInStudent(studentId: string): Promise<IGrade[]> {
+    return await this.gradeModel
+      .find({
+        student: Types.ObjectId(studentId)
+      })
+      .populate("subject")
+      .exec();
   }
 
   public async createOneOrMany(
@@ -69,15 +75,25 @@ export class GradeService {
       )
       .exec();
   }
-
   public async deleteOne(id: string) {
-    return await this.gradeModel.deleteOne({ _id: Types.ObjectId(id) }).exec();
+    return await this.gradeModel
+      .findById(id)
+      .exec()
+      .then((document: IGrade) => {
+        document.remove();
+      });
   }
 
   public async deleteMany(conditions: IGrade) {
-    return await this.gradeModel.deleteMany(conditions).exec();
+    return await this.gradeModel
+      .find(conditions)
+      .exec()
+      .then((documents: IGrade[]) => {
+        return documents.forEach(document => {
+          document.remove();
+        });
+      });
   }
-
   public async deleteAll() {
     return await this.gradeModel.deleteMany({}).exec();
   }

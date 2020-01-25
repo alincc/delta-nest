@@ -6,7 +6,6 @@ import {
   Res,
   Get,
   Param,
-  HttpException,
   HttpStatus,
   Delete,
   Put
@@ -168,6 +167,25 @@ export class GradeController {
 
     return this.gradeControllerService
       .findAllInSubject(id)
+      .then((success: IResponse) => {
+        return response.status(201).json(success);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
+
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Get("student/:id")
+  async findAllInStudent(@Param() param, @Res() response: Response) {
+    const id = param["id"];
+
+    return this.gradeControllerService
+      .findAllInStudent(id)
       .then((success: IResponse) => {
         return response.status(201).json(success);
       })

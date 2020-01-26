@@ -3,7 +3,8 @@
 ## 79 Endpoints
 
 This api includes image uploads and role base authentication, this api runs on node 10 or greather
-and <b> needs mongodb server</b> running at the default port; furthermore, all routes a student can access a principal can too but routes that only principals are allowed to access requiere a principal Token. Tokens are generated through the Auth Endpoint. Deletions follow cascade deletions on all collections, for example deleting the principal will not delete a school but deleting a school will delete all records at that school like payments and students.
+and **needs mongodb server**
+running at the default port; furthermore, all routes a student can access a principal can too but routes that only principals are allowed to access requiere a principal Token. Tokens are generated through the Auth Endpoint. **Deletions follow cascade deletions on all collections** , for example deleting the principal will not delete a school but deleting a school will delete all records at that school like payments and students.
 
 #### Auth Endpoints (3)
 
@@ -148,3 +149,24 @@ and <b> needs mongodb server</b> running at the default port; furthermore, all r
 | ------ | :------------------------- | :-------- | :-------: |
 | GET    | uploads/avatar/:parent/:id | Any       |    app    |
 | POST   | uploads/avatar/:file       | Principal |    app    |
+
+## Installation and Usage
+
+**You need at least node 10 running on your machine and mongo 4.2**
+
+```bash
+npm i -g @nestjs/cli
+npm i
+nest build
+node dist/main.js
+```
+
+## Development
+
+**You need at least node 10 running on your machine and mongo 4.2**
+
+```bash
+npm i -g @nestjs/cli
+npm i
+nest serve --watch
+```

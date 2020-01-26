@@ -47,7 +47,7 @@ export class PrincipalController {
       });
   }
 
-  @Roles("PRINCIPAL_ROLE", "STUDENT_ROLE")
+  @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Get(":id")
   async findById(@Param() param, @Res() response: Response) {

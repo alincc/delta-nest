@@ -165,7 +165,7 @@ export class PaymentController {
       });
   }
 
-  @Roles("PRINCIPAL_ROLE")
+  @Roles("PRINCIPAL_ROLE", "STUDENT_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Get("student/:id")
   async findAllInStudent(@Param() param, @Res() response: Response) {

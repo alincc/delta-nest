@@ -22,7 +22,8 @@ export class MaintenanceController {
   //          GET FUNCTIONS
   ////////////////////////////////////////
 
-  @Get()
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
   getCurrentState(@Res() response: Response) {
     this.maintenanceControllerService
       .getCurrentState()

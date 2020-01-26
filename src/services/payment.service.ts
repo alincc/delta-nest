@@ -57,26 +57,24 @@ export class PaymentService {
       .exec();
   }
 
-  public async pullMany(conditions: IPayment, pullProperties: IPayment) {
-    return await this.paymentModel
-      .findOneAndUpdate(
-        conditions,
-        {
-          $pullAll: { pullProperties }
-        },
-        { new: true }
-      )
-      .exec();
-  }
-
   public async deleteOne(id: string) {
     return await this.paymentModel
-      .deleteOne({ _id: Types.ObjectId(id) })
-      .exec();
+      .findById(id)
+      .exec()
+      .then((document: IPayment) => {
+        document.remove();
+      });
   }
 
   public async deleteMany(conditions: IPayment) {
-    return await this.paymentModel.deleteMany(conditions).exec();
+    return await this.paymentModel
+      .find(conditions)
+      .exec()
+      .then((documents: IPayment[]) => {
+        return documents.forEach(document => {
+          document.remove();
+        });
+      });
   }
 
   public async deleteAll() {

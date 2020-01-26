@@ -166,9 +166,9 @@ export class ProgramController {
   ////////////////////////////////////////
   //          CRUD CHILD FUNCTIONS
   ////////////////////////////////////////
-  @Put(":id/subject/:subjectId")
   @Roles("PRINCIPAL_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Put(":id/subject/:subjectId")
   addSubject(@Param() param, @Res() response: Response) {
     const id = param["id"];
     const subjectId = param["subjectId"];
@@ -186,9 +186,9 @@ export class ProgramController {
       });
   }
 
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Delete(":id/subject/:subjectId")
-  // @Roles("PRINCIPAL_ROLE")
-  // @UseGuards(AuthGuard("jwt"), RolesGuard)
   removeSubject(@Param() param, @Res() response: Response) {
     const id = param["id"];
     const subjectId = param["subjectId"];

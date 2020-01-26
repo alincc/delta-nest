@@ -5,6 +5,7 @@ import { IResponse } from "src/interfaces/response.interface";
 import * as _ from "lodash";
 import { GradeService } from "src/services/grade.service";
 import { IGrade } from "src/interfaces/grade.interface";
+import { Types } from "mongoose";
 
 @Injectable()
 export class GradeControllerService {
@@ -74,8 +75,8 @@ export class GradeControllerService {
     });
   }
 
-  public async createOne(garde: IGrade): Promise<IResponse> {
-    return this.gradeService.createOneOrMany(garde).then((document: IGrade) => {
+  public async createOne(grade: IGrade): Promise<IResponse> {
+    return this.gradeService.createOneOrMany(grade).then((document: IGrade) => {
       return {
         errors: false,
         statusCode: 201,
@@ -85,8 +86,8 @@ export class GradeControllerService {
     });
   }
 
-  public async updateOne(id: string, garde: IGrade): Promise<IResponse> {
-    const sanitizedGrade = _.omit(garde, ["student", "subject", "school"]);
+  public async updateOne(id: string, grade: IGrade): Promise<IResponse> {
+    const sanitizedGrade = _.omit(grade, ["student", "subject", "school"]);
 
     return this.gradeService
       .updateCreateOne(id, sanitizedGrade)

@@ -1,76 +1,150 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Multi School Delta Api
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 79 Endpoints
 
-## Description
+This api includes image uploads and role base authentication, this api runs on node 10 or greather
+and <b> needs mongodb server</b> running at the default port; furthermore, all routes a student can access a principal can too but routes that only principals are allowed to access requiere a principal Token. Tokens are generated through the Auth Endpoint. Deletions follow cascade deletions on all collections, for example deleting the principal will not delete a school but deleting a school will delete all records at that school like payments and students.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+#### Auth Endpoints (3)
 
-## Installation
+| Method | route          | Level | Objective  |
+| ------ | :------------- | :---- | :--------: |
+| POST   | auth/login     | Any   |    app     |
+| POST   | auth/signUp    | Any   |    app     |
+| POST   | auth/:username | Any   | Validation |
 
-```bash
-$ npm install
-```
+#### Flight Endpoints (6)
 
-## Running the app
+| Method | route              | Level     | Objective |
+| ------ | :----------------- | :-------- | :-------: |
+| GET    | flights/           | Principal |    app    |
+| GET    | flights/:id        | Student   |    app    |
+| POST   | flights/           | Principal |    app    |
+| PUT    | flights/:id        | Principal |    app    |
+| DELETE | flights/:id        | Principal |    app    |
+| GET    | flights/school/:id | Principal |    app    |
 
-```bash
-# development
-$ npm run start
+#### Grade Endpoints (8)
 
-# watch mode
-$ npm run start:dev
+| Method | route              | Level     | Objective |
+| ------ | :----------------- | :-------- | :-------: |
+| GET    | grades/            | Principal |    app    |
+| GET    | grades/:id         | Student   |    app    |
+| POST   | grades/            | Principal |    app    |
+| PUT    | grades/:id         | Principal |    app    |
+| DELETE | grades/:id         | Principal |    app    |
+| GET    | grades/school/:id  | Principal |    app    |
+| GET    | grades/subject/:id | Principal |    app    |
+| GET    | grades/student/:id | Student   |    app    |
 
-# production mode
-$ npm run start:prod
-```
+#### Group Endpoints (8)
 
-## Test
+| Method | route                         | Level     | Objective |
+| ------ | :---------------------------- | :-------- | :-------: |
+| GET    | groups/                       | Principal |    app    |
+| GET    | groups/:id                    | Student   |    app    |
+| POST   | groups/                       | Principal |    app    |
+| PUT    | groups/:id                    | Principal |    app    |
+| DELETE | groups/:id                    | Principal |    app    |
+| GET    | groups/school/:id             | Principal |    app    |
+| PUT    | groups/:id/student/:studentId | Principal |    app    |
+| DELETE | groups/:id/student/:studentId | Principal |    app    |
 
-```bash
-# unit tests
-$ npm run test
+#### Maintenance Endpoints (2)
 
-# e2e tests
-$ npm run test:e2e
+| Method | route        | Level     |  Objective  |
+| ------ | :----------- | :-------- | :---------: |
+| GET    | maintenance/ | Principal | maintenance |
+| DELETE | maintenance/ | Principal | maintenance |
 
-# test coverage
-$ npm run test:cov
-```
+#### Payment Endpoints (8)
 
-## Support
+| Method | route                 | Level     | Objective  |
+| ------ | :-------------------- | :-------- | :--------: |
+| GET    | payments/             | Principal |    app     |
+| GET    | payments/:id          | Student   |    app     |
+| POST   | payments/             | Principal |    app     |
+| PUT    | payments/:id          | Principal |    app     |
+| DELETE | payments/:id          | Principal |    app     |
+| GET    | payments/school/:id   | Principal |    app     |
+| GET    | payments/student/:id  | Student   |    app     |
+| GET    | payments/folio/:folio | Principal | Validation |
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+#### Principal Endpoints (6)
 
-## Stay in touch
+| Method | route                 | Level     | Objective |
+| ------ | :-------------------- | :-------- | :-------: |
+| GET    | principals/           | Principal |    app    |
+| GET    | principals/:id        | Principal |    app    |
+| POST   | principals/           | Principal |    app    |
+| PUT    | principals/:id        | Principal |    app    |
+| DELETE | principals/:id        | Principal |    app    |
+| GET    | principals/school/:id | Principal |    app    |
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+#### Program Endpoints (8)
 
-## License
+| Method | route                           | Level     | Objective  |
+| ------ | :------------------------------ | :-------- | :--------: |
+| GET    | programs/                       | Principal |    app     |
+| GET    | programs/:id                    | Student   |    app     |
+| POST   | programs/                       | Principal |    app     |
+| PUT    | programs/:id                    | Principal |    app     |
+| DELETE | programs/:id                    | Principal |    app     |
+| PUT    | programs/:id/subject/:subjectId | Principal |    app     |
+| DELETE | programs/:id/subject/:subjectId | Principal |    app     |
+| GET    | programs/folio/:folio           | Principal | Validation |
 
-  Nest is [MIT licensed](LICENSE).
-# delta-nest
+#### School Endpoints (6)
+
+| Method | route                 | Level     | Objective |
+| ------ | :-------------------- | :-------- | :-------: |
+| GET    | schools/              | Principal |    app    |
+| GET    | schools/:id           | Student   |    app    |
+| POST   | schools/              | Principal |    app    |
+| PUT    | schools/:id           | Principal |    app    |
+| DELETE | schools/:id           | Principal |    app    |
+| GET    | schools/principal/:id | Principal |    app    |
+
+#### Student Endpoints (7)
+
+| Method | route               | Level     | Objective |
+| ------ | :------------------ | :-------- | :-------: |
+| GET    | students/           | Principal |    app    |
+| GET    | students/:id        | Student   |    app    |
+| POST   | students/           | Principal |    app    |
+| PUT    | students/:id        | Principal |    app    |
+| DELETE | students/:id        | Principal |    app    |
+| GET    | students/school/:id | Principal |    app    |
+| GET    | students/group/:id  | Principal |    app    |
+
+#### Subject Endpoints (8)
+
+| Method | route                | Level     | Objective  |
+| ------ | :------------------- | :-------- | :--------: |
+| GET    | subjects/            | Principal |    app     |
+| GET    | subjects/:id         | Principal |    app     |
+| POST   | subjects/            | Principal |    app     |
+| PUT    | subjects/:id         | Principal |    app     |
+| DELETE | subjects/:id         | Principal |    app     |
+| GET    | subjects/school/:id  | Principal |    app     |
+| GET    | subjects/program/:id | Principal |    app     |
+| GET    | folio/:folio         | Principal | Validation |
+
+#### Subject Endpoints (7)
+
+| Method | route               | Level     | Objective |
+| ------ | :------------------ | :-------- | :-------: |
+| GET    | subjects/           | Principal |    app    |
+| GET    | subjects/:id        | Principal |    app    |
+| POST   | subjects/           | Principal |    app    |
+| PUT    | subjects/:id        | Principal |    app    |
+| DELETE | subjects/:id        | Principal |    app    |
+| GET    | subjects/school/:id | Principal |    app    |
+| GET    | subjects/group/:id  | Principal |    app    |
+
+#### Upload Endpoints (2)
+
+| Method | route                      | Level     | Objective |
+| ------ | :------------------------- | :-------- | :-------: |
+| GET    | uploads/avatar/:parent/:id | Any       |    app    |
+| POST   | uploads/avatar/:file       | Principal |    app    |

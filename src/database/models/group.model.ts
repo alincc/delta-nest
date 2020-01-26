@@ -39,6 +39,21 @@ GroupSchema.pre("remove", function(next) {
     });
 });
 
+GroupSchema.post("findOneAndUpdate", function(document: IGroup, next) {
+  let operation = Object.keys(this._update)[0];
+  let property = Object.keys(this._update[operation])[0];
+
+  return model("user")
+    .findByIdAndUpdate(this._update[operation][property], {
+      [operation]: {
+        programs: Types.ObjectId(document._id)
+      }
+    })
+    .then(() => {
+      return next();
+    });
+});
+
 GroupSchema.post("save", function(document: IGroup, next) {
   return model("school")
     .findByIdAndUpdate(document.school, {

@@ -64,17 +64,34 @@ export class GradeService {
       .exec();
   }
 
-  public async pullMany(conditions: IGrade, pullProperties: IGrade) {
+  public async addChild(
+    id: string,
+    pushProperties: { subjects?: any; students?: any }
+  ) {
+    return await this.gradeModel.findOneAndUpdate(
+      { _id: Types.ObjectId(id) },
+      {
+        $push: pushProperties
+      },
+      { new: true }
+    );
+  }
+
+  public async removeChild(
+    id: string,
+    pullProperties: { subjects?: any; students?: any }
+  ) {
     return await this.gradeModel
       .findOneAndUpdate(
-        conditions,
+        { _id: Types.ObjectId(id) },
         {
-          $pullAll: { pullProperties }
+          $pull: pullProperties
         },
         { new: true }
       )
       .exec();
   }
+
   public async deleteOne(id: string) {
     return await this.gradeModel
       .findById(id)
@@ -94,6 +111,7 @@ export class GradeService {
         });
       });
   }
+
   public async deleteAll() {
     return await this.gradeModel.deleteMany({}).exec();
   }

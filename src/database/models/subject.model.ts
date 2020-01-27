@@ -42,9 +42,16 @@ SubjectSchema.pre("remove", function(next) {
       );
     })
     .then(() => {
-      return model("grade").deleteMany({
-        subject: Types.ObjectId(document._id)
-      } as IGrade);
+      return model("grade")
+        .find({
+          subject: Types.ObjectId(document._id)
+        } as IGrade)
+        .exec();
+    })
+    .then((documents: IGrade[]) => {
+      return documents.forEach(document => {
+        document.remove();
+      });
     })
     .then(() => {
       return next();

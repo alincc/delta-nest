@@ -51,7 +51,7 @@ FlightSchema.post("save", function(document: IFlight, next) {
   return model("school")
     .findByIdAndUpdate(document.school, {
       $push: {
-        flights: document._id
+        flights: Types.ObjectId(document._id)
       }
     })
     .then(() => {
@@ -62,7 +62,7 @@ FlightSchema.post("save", function(document: IFlight, next) {
             { _id: { $in: document.authorizedBy } }
           ]
         },
-        { flights: document._id }
+        { flights: Types.ObjectId(document._id) }
       );
     })
     .then(() => {

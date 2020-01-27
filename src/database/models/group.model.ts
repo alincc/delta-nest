@@ -45,8 +45,8 @@ GroupSchema.post("findOneAndUpdate", function(document: IGroup, next) {
 
   return model("user")
     .findByIdAndUpdate(this._update[operation][property], {
-      [operation]: {
-        programs: Types.ObjectId(document._id)
+      [operation == "$push" ? "$set" : "$unset"]: {
+        group: Types.ObjectId(document._id)
       }
     })
     .then(() => {

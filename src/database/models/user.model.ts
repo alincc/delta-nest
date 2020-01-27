@@ -110,14 +110,28 @@ UserSchema.pre("remove", function(next) {
         );
       })
       .then(() => {
-        return model("payment").deleteMany({
-          student: Types.ObjectId(document._id)
-        } as IPayment);
+        return model("payment")
+          .find({
+            student: Types.ObjectId(document._id)
+          } as IPayment)
+          .exec();
+      })
+      .then((documents: IPayment[]) => {
+        return documents.forEach(document => {
+          document.remove();
+        });
       })
       .then(() => {
-        return model("grade").deleteMany({
-          student: Types.ObjectId(document._id)
-        } as IGrade);
+        return model("grade")
+          .find({
+            student: Types.ObjectId(document._id)
+          } as IGrade)
+          .exec();
+      })
+      .then((documents: IGrade[]) => {
+        return documents.forEach(document => {
+          document.remove();
+        });
       })
       .then(() => {
         return next();

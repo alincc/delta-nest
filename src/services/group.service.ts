@@ -51,22 +51,22 @@ export class GroupService {
       .exec();
   }
 
-  public async addChild(id: string, setProperties: { members?: any }) {
+  public async addChild(id: string, pushProperties: { members?: any }) {
     return await this.groupModel.findOneAndUpdate(
       { _id: Types.ObjectId(id) },
       {
-        $set: setProperties
+        $push: pushProperties
       },
       { new: true }
     );
   }
 
-  public async removeChild(id: string, unsetProperties: { members?: any }) {
+  public async removeChild(id: string, pullProperties: { members?: any }) {
     return await this.groupModel
       .findOneAndUpdate(
         { _id: Types.ObjectId(id) },
         {
-          $unset: unsetProperties
+          $pull: pullProperties
         },
         { new: true }
       )

@@ -6,6 +6,7 @@ import { IFlight } from "src/interfaces/flight.interface";
 import { IProgram } from "src/interfaces/program.interface";
 import { ISubject } from "src/interfaces/subject.iterface";
 import { IGrade } from "src/interfaces/grade.interface";
+import { IUser } from "src/interfaces/user.interface";
 
 export const SchoolSchema = new Schema({
   name: { type: String, default: null },
@@ -35,40 +36,89 @@ SchoolSchema.post("remove", function(document: ISchool, next) {
       }
     )
     .then(() => {
-      return model("user").deleteMany({
-        schools: Types.ObjectId(document._id),
-        role: "STUDENT_ROLE"
+      return model("user")
+        .find({
+          schools: Types.ObjectId(document._id),
+          role: "STUDENT_ROLE"
+        })
+        .exec();
+    })
+    .then((documents: IUser[]) => {
+      return documents.forEach(document => {
+        document.remove();
       });
     })
     .then(() => {
-      return model("group").deleteMany({
-        school: Types.ObjectId(document._id)
-      } as IGroup);
+      return model("group")
+        .find({
+          school: Types.ObjectId(document._id)
+        } as IGroup)
+        .exec();
+    })
+    .then((documents: IGroup[]) => {
+      return documents.forEach(document => {
+        document.remove();
+      });
     })
     .then(() => {
-      return model("payment").deleteMany({
-        school: Types.ObjectId(document._id)
-      } as IPayment);
+      return model("payment")
+        .find({
+          school: Types.ObjectId(document._id)
+        } as IPayment)
+        .exec();
+    })
+    .then((documents: IPayment[]) => {
+      return documents.forEach(document => {
+        document.remove();
+      });
     })
     .then(() => {
-      return model("flight").deleteMany({
-        school: Types.ObjectId(document._id)
-      } as IFlight);
+      return model("flight")
+        .find({
+          school: Types.ObjectId(document._id)
+        } as IFlight)
+        .exec();
+    })
+    .then((documents: IFlight[]) => {
+      return documents.forEach(document => {
+        document.remove();
+      });
     })
     .then(() => {
-      return model("program").deleteMany({
-        school: Types.ObjectId(document._id)
-      } as IProgram);
+      return model("program")
+        .find({
+          school: Types.ObjectId(document._id)
+        } as IProgram)
+        .exec();
+    })
+    .then((documents: IProgram[]) => {
+      return documents.forEach(document => {
+        document.remove();
+      });
     })
     .then(() => {
-      return model("subject").deleteMany({
-        school: Types.ObjectId(document._id)
-      } as ISubject);
+      return model("subject")
+        .find({
+          school: Types.ObjectId(document._id)
+        } as ISubject)
+        .exec();
+    })
+    .then((documents: ISubject[]) => {
+      return documents.forEach(document => {
+        document.remove();
+      });
     })
     .then(() => {
-      return model("grade").deleteMany({
-        school: Types.ObjectId(document._id)
-      } as IGrade);
+      return model("grade")
+        .find({
+          school: Types.ObjectId(document._id)
+        } as IGrade)
+        .exec();
+    })
+    .then((documents: IGrade[]) => {
+      return documents.forEach(document => {
+        document.remove();
+      });
     })
     .then(() => {
       return next();

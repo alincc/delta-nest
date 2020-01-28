@@ -7,7 +7,7 @@ export interface IFlight extends Document {
   name?: string;
   description?: string;
   startDate?: number;
-  duration?: number;
+  duration?: string;
   cost?: number;
   enlisted?: IUser[] | Types.ObjectId[];
   approved?: IUser[] | Types.ObjectId[];

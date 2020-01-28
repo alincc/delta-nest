@@ -50,20 +50,6 @@ export class SubjectControllerService {
       });
   }
 
-  public async checkFolio(folio: string): Promise<IResponse> {
-    return this.subjectService.findOne(folio).then((document: ISubject) => {
-      if (!document) {
-        throw new Error();
-      }
-      return {
-        errors: false,
-        statusCode: 200,
-        message: "Subject Found",
-        data: document
-      };
-    });
-  }
-
   public async findById(id: string): Promise<IResponse> {
     return this.subjectService.findById(id).then((document: ISubject) => {
       return {
@@ -111,6 +97,20 @@ export class SubjectControllerService {
         statusCode: 200,
         message: "Subject deleted",
         data: null
+      };
+    });
+  }
+
+  public async checkFolio(folio: string): Promise<IResponse> {
+    return this.subjectService.findOne(folio).then((document: ISubject) => {
+      if (!document) {
+        throw new Error();
+      }
+      return {
+        errors: false,
+        statusCode: 200,
+        message: "Subject Found",
+        data: document
       };
     });
   }

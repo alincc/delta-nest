@@ -10,7 +10,7 @@ export const FlightSchema = new Schema({
   name: { type: String, default: null },
   description: { type: String, default: null },
   startDate: { type: Number, default: Date.now() },
-  duration: { type: Number, default: 0 },
+  duration: { type: String, default: "0 horas" },
   cost: { type: Number, default: 0 },
   enlisted: [{ type: Schema.Types.ObjectId, ref: "user" }],
   approved: [{ type: Schema.Types.ObjectId, ref: "user" }],
@@ -41,6 +41,21 @@ FlightSchema.pre("remove", function(next) {
           }
         }
       );
+    })
+    .then(() => {
+      return next();
+    });
+});
+
+FlightSchema.post("findOneAndUpdate", function(document: IFlight, next) {
+  let operation = Object.keys(this._update)[0];
+  let property = Object.keys(this._update[operation])[0];
+
+  return model("user")
+    .findByIdAndUpdate(this._update[operation][property], {
+      [operation]: {
+        flights: Types.ObjectId(document._id)
+      }
     })
     .then(() => {
       return next();

@@ -157,4 +157,112 @@ export class FlightController {
         });
       });
   }
+
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Get("student/:id")
+  async findAllInStudent(@Param() param, @Res() response: Response) {
+    const id = param["id"];
+
+    return this.flightControllerService
+      .findAllInStudent(id)
+      .then((success: IResponse) => {
+        return response.status(201).json(success);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
+
+  ////////////////////////////////////////
+  //          CRUD CHILD FUNCTIONS
+  ////////////////////////////////////////
+  @Roles("PRINCIPAL_ROLE", "STUDENT_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Put(":id/recruit/:studentId")
+  addRecruit(@Param() param, @Res() response: Response) {
+    const id = param["id"];
+    const studentId = param["studentId"];
+
+    this.flightControllerService
+      .removeStudent(id, studentId)
+      .then(() => {
+        return this.flightControllerService.addRecruit(id, studentId);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
+
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Put(":id/pilot/:studentId")
+  addPilot(@Param() param, @Res() response: Response) {
+    const id = param["id"];
+    const studentId = param["studentId"];
+
+    this.flightControllerService
+      .removeStudent(id, studentId)
+      .then(() => {
+        return this.flightControllerService.addPilot(id, studentId);
+      })
+      .then((success: IResponse) => {
+        return response.status(200).json(success);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
+
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Delete(":id/student/:studentId")
+  removeStudent(@Param() param, @Res() response: Response) {
+    const id = param["id"];
+    const studentId = param["studentId"];
+
+    this.flightControllerService
+      .removeStudent(id, studentId)
+      .then((success: IResponse) => {
+        return response.status(200).json(success);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
+
+  ////////////////////////////////////////
+  //          GET VALIDATION FUNCTIONS
+  ////////////////////////////////////////
+
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Get("folio/:folio")
+  async checkFolio(@Param() param, @Res() response: Response) {
+    const folio = param["folio"];
+
+    return this.flightControllerService
+      .checkFolio(folio)
+      .then((success: IResponse) => {
+        return response.status(201).json(success);
+      })
+      .catch(error => {
+        return response.status(404).json({
+          status: HttpStatus.NOT_FOUND,
+          error: "Folio Not Found"
+        });
+      });
+  }
 }

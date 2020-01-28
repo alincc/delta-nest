@@ -20,7 +20,19 @@ export class FlightService {
   async findAllInSchool(schoolId: string): Promise<IFlight[]> {
     return await this.flightModel
       .find({
-        schools: Types.ObjectId(schoolId)
+        school: Types.ObjectId(schoolId)
+      })
+      .populate({ path: "enlisted approved" })
+      .exec();
+  }
+
+  async findAllInStudent(studentId: string): Promise<IFlight[]> {
+    return await this.flightModel
+      .find({
+        $or: [
+          { enlisted: Types.ObjectId(studentId) },
+          { approved: Types.ObjectId(studentId) }
+        ]
       })
       .exec();
   }
@@ -51,18 +63,33 @@ export class FlightService {
       .exec();
   }
 
-  public async pullMany(conditions: IFlight, pullProperties: IFlight) {
+  public async addChild(
+    id: string,
+    pushProperties: { enlisted?: any; approved?: any }
+  ) {
+    return await this.flightModel.findOneAndUpdate(
+      { _id: Types.ObjectId(id) },
+      {
+        $push: pushProperties
+      },
+      { new: true }
+    );
+  }
+
+  public async removeChild(
+    id: string,
+    pullProperties: { enlisted?: any; approved?: any }
+  ) {
     return await this.flightModel
       .findOneAndUpdate(
-        conditions,
+        { _id: Types.ObjectId(id) },
         {
-          $pullAll: { pullProperties }
+          $pull: pullProperties
         },
         { new: true }
       )
       .exec();
   }
-
   public async deleteOne(id: string) {
     return await this.flightModel.deleteOne({ _id: Types.ObjectId(id) }).exec();
   }

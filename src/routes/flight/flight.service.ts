@@ -5,6 +5,7 @@ import { FlightService } from "src/services/flight.service";
 import { IFlight } from "src/interfaces/flight.interface";
 
 import * as _ from "lodash";
+import { Types } from "mongoose";
 
 @Injectable()
 export class FlightControllerService {
@@ -25,6 +26,20 @@ export class FlightControllerService {
   public async findAllInSchool(schoolId: string): Promise<IResponse> {
     return this.flightService
       .findAllInSchool(schoolId)
+      .then((document: IFlight[]) => {
+        return {
+          errors: false,
+          statusCode: 200,
+          message: "Flights Found",
+          count: document.length,
+          data: document
+        };
+      });
+  }
+
+  public async findAllInStudent(studentId: string): Promise<IResponse> {
+    return this.flightService
+      .findAllInStudent(studentId)
       .then((document: IFlight[]) => {
         return {
           errors: false,
@@ -62,6 +77,7 @@ export class FlightControllerService {
 
   public async updateOne(id: string, flight: IFlight): Promise<IResponse> {
     const sanitizedFlight = _.omit(flight, [
+      "_id",
       "enlisted",
       "approved",
       "school",
@@ -69,7 +85,55 @@ export class FlightControllerService {
     ]);
 
     return this.flightService
-      .updateCreateOne(id, sanitizedFlight)
+      .updateCreateOne(id, sanitizedFlight as IFlight)
+      .then((document: any) => {
+        document as IFlight;
+        return {
+          errors: false,
+          statusCode: 200,
+          message: "Flight Updated",
+          data: document
+        };
+      });
+  }
+
+  public async addRecruit(id: string, studentId: string): Promise<IResponse> {
+    return this.flightService
+      .addChild(id, { enlisted: Types.ObjectId(studentId) })
+      .then((document: any) => {
+        document as IFlight;
+        return {
+          errors: false,
+          statusCode: 200,
+          message: "Flight Updated",
+          data: document
+        };
+      });
+  }
+
+  public async addPilot(id: string, studentId: string): Promise<IResponse> {
+    return this.flightService
+      .addChild(id, { approved: Types.ObjectId(studentId) })
+      .then((document: any) => {
+        document as IFlight;
+        return {
+          errors: false,
+          statusCode: 200,
+          message: "Flight Updated",
+          data: document
+        };
+      });
+  }
+
+  public async removeStudent(
+    id: string,
+    studentId: string
+  ): Promise<IResponse> {
+    return this.flightService
+      .removeChild(id, {
+        enlisted: Types.ObjectId(studentId),
+        approved: Types.ObjectId(studentId)
+      })
       .then((document: any) => {
         document as IFlight;
         return {
@@ -88,6 +152,20 @@ export class FlightControllerService {
         statusCode: 200,
         message: "Flight deleted",
         data: null
+      };
+    });
+  }
+
+  public async checkFolio(folio: string): Promise<IResponse> {
+    return this.flightService.findOne(folio).then((document: IFlight) => {
+      if (!document) {
+        throw new Error();
+      }
+      return {
+        errors: false,
+        statusCode: 200,
+        message: "Subject Found",
+        data: document
       };
     });
   }

@@ -92,6 +92,20 @@ let StudentController = class StudentController {
             });
         });
     }
+    async deleteAll(param, response) {
+        console.log("ok");
+        return this.studentControllerService
+            .deleteMany({})
+            .then((success) => {
+            return response.status(201).json(success);
+        })
+            .catch(error => {
+            return response.status(400).json({
+                status: common_1.HttpStatus.BAD_REQUEST,
+                error
+            });
+        });
+    }
     async findAllInSchool(param, response, query) {
         const id = param["id"];
         const flags = {
@@ -171,6 +185,15 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "deleteOne", null);
+__decorate([
+    roles_decorator_1.Roles("PRINCIPAL_ROLE"),
+    common_1.UseGuards(passport_1.AuthGuard("jwt"), roles_guard_1.RolesGuard),
+    common_1.Delete(),
+    __param(0, common_1.Param()), __param(1, common_1.Res()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], StudentController.prototype, "deleteAll", null);
 __decorate([
     roles_decorator_1.Roles("PRINCIPAL_ROLE"),
     common_1.UseGuards(passport_1.AuthGuard("jwt"), roles_guard_1.RolesGuard),

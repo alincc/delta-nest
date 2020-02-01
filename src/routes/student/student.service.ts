@@ -113,4 +113,17 @@ export class StudentControllerService {
       };
     });
   }
+
+  public async deleteMany(conditions): Promise<IResponse> {
+    return this.userService
+      .deleteMany({ ...{ role: "STUDENT_ROLE" }, ...conditions })
+      .then(() => {
+        return {
+          errors: false,
+          statusCode: 200,
+          message: "User deleted",
+          data: null
+        };
+      });
+  }
 }

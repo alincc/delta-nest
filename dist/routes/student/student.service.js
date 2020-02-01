@@ -109,6 +109,18 @@ let StudentControllerService = class StudentControllerService {
             };
         });
     }
+    async deleteMany(conditions) {
+        return this.userService
+            .deleteMany(Object.assign({ role: "STUDENT_ROLE" }, conditions))
+            .then(() => {
+            return {
+                errors: false,
+                statusCode: 200,
+                message: "User deleted",
+                data: null
+            };
+        });
+    }
 };
 StudentControllerService = __decorate([
     common_1.Injectable(),

@@ -15,4 +15,5 @@ export declare class StudentControllerService {
     createOne(student: IUser): Promise<IResponse>;
     updateOne(id: string, user: IUser): Promise<IResponse>;
     deleteOne(id: string): Promise<IResponse>;
+    deleteMany(conditions: any): Promise<IResponse>;
 }

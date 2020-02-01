@@ -9,6 +9,7 @@ export declare class StudentController {
     createOne(student: ReceiveUserDto, response: Response): Promise<Response>;
     updateOne(param: any, student: ReceiveUserDto, response: Response): void;
     deleteOne(param: any, response: Response): Promise<Response>;
+    deleteAll(param: any, response: Response): Promise<Response>;
     findAllInSchool(param: any, response: Response, query: any): Promise<Response>;
     findAllInGroup(param: any, response: Response): Promise<Response>;
 }

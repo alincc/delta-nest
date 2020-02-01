@@ -1590,12 +1590,12 @@
         "signature": "a3fb5c5ed37cfde67b9a10b093177fe5f49f8e912b6487cc902c6a6e6eead7c1"
       },
       "../src/routes/student/student.service.ts": {
-        "version": "8624a76f89c87aa77835b82796e50010a8ea9ddf3db1048a3dd1b61ea9eb3ddf",
-        "signature": "6328a00a69b647db0678c57ca86e8f6cdee8f723785298516598fc5c9ee3d629"
+        "version": "fb0157dd8a59c86e61a984e6df6075ef99f6248fc9b494b611b64f4432d15067",
+        "signature": "eda61e5b9e952c4268458bcd7804fe9286a1e6204f9b0a7ec8d9987900b5fd28"
       },
       "../src/routes/student/student.controller.ts": {
-        "version": "1a46de4ad7a1bb6e0453698f0591b85817b96d4dc8f70257f57ae1c7b4e205ae",
-        "signature": "5632c20f2579e35f4c1d779141cdfa9b0f7bd7ba7bb9f93ae4e9b3755f7ea6e3"
+        "version": "303df5d375415d4f854dcad38ecd2f53171376a477a904d0f4e668edecce9137",
+        "signature": "347089175748bad1ca04ee36df30f5a7d06af492aa363a8109e4d30bea736c05"
       },
       "../src/routes/student/student.module.ts": {
         "version": "f00f16941a556bb545d1be406c8d0c5d16f97868b7570a72a8aaf443c3d1fc13",
@@ -10157,7 +10157,6 @@
       "../node_modules/@types/connect/index.d.ts",
       "../node_modules/@types/body-parser/index.d.ts",
       "../node_modules/@types/express/index.d.ts",
-      "../src/auth/auth.controller.ts",
       "../node_modules/@types/passport/index.d.ts",
       "../node_modules/@types/passport-strategy/index.d.ts",
       "../node_modules/@types/passport-jwt/index.d.ts",
@@ -10213,6 +10212,7 @@
       "../src/routes/principal/principal.service.ts",
       "../src/routes/principal/principal.controller.ts",
       "../src/routes/principal/principal.module.ts",
+      "../src/routes/flight/flight.service.ts",
       "../src/dtos/receive-flight.dto.ts",
       "../src/routes/flight/flight.controller.ts",
       "../src/routes/flight/flight.module.ts",
@@ -10297,7 +10297,7 @@
       "../node_modules/@types/webpack/index.d.ts",
       "../node_modules/@types/yargs-parser/index.d.ts",
       "../node_modules/@types/yargs/index.d.ts",
-      "../src/routes/flight/flight.service.ts"
+      "../src/auth/auth.controller.ts"
     ]
   },
   "version": "3.7.4"

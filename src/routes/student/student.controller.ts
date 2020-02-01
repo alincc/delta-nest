@@ -138,6 +138,24 @@ export class StudentController {
       });
   }
 
+  @Roles("PRINCIPAL_ROLE")
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @Delete()
+  async deleteAll(@Param() param, @Res() response: Response) {
+    console.log("ok");
+
+    return this.studentControllerService
+      .deleteMany({})
+      .then((success: IResponse) => {
+        return response.status(201).json(success);
+      })
+      .catch(error => {
+        return response.status(400).json({
+          status: HttpStatus.BAD_REQUEST,
+          error
+        });
+      });
+  }
   ////////////////////////////////////////
   //          GET PARENT FUNCTION
   ////////////////////////////////////////

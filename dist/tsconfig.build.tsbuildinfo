@@ -1154,7 +1154,7 @@
         "signature": "d802fbac9170128fd7bf649cae4cd9d91b8ce6b74dc61efd6f1eb56e3a7f34bb"
       },
       "../src/database/models/flight.model.ts": {
-        "version": "0bf1b9ad0f99973192b9f3fadb5f1f34de6cef684c3ad904588fda10bb046715",
+        "version": "5e699eb36beb4b43e4527ae1bf466de5fc59cb9481634f17732b532802d6fec4",
         "signature": "64d907d1f536ce2acce950ffa17803deb2846588ddf9efb46858cd497d22025a"
       },
       "../src/database/models/grade.model.ts": {
@@ -1162,11 +1162,11 @@
         "signature": "6afd0f9d2ff329d6366d970435dae4e3351e4d72ae93f4b4c8ba4e006bcb44ef"
       },
       "../src/database/models/group.model.ts": {
-        "version": "99089846e6e6fcdc5a52b43391aae644fa6024525c169ddbff3748e8f7f79adb",
+        "version": "d8998d76ac014092fce425a0b023ce58d627b4f20d4f4835a95748a1056fc38f",
         "signature": "76c3d6675f15a613ee73d280e960ea01d1ce88f6f502df374a8618715dd62a06"
       },
       "../src/database/models/program.model.ts": {
-        "version": "5652230403dedc81ae6a2dabf6c181d8f73131bf38f5aef26281658ab5db5222",
+        "version": "2882657199b6cf9fec3ba0fc2bf2dcce40b560b1ffd068b174527d97f4a4300b",
         "signature": "bf35396605fe100d047d9d4dd635769f910581add3b46eb1331306ca39247de7"
       },
       "../src/database/models/payment.model.ts": {

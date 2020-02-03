@@ -43,6 +43,9 @@ exports.ProgramSchema.pre("remove", function (next) {
 exports.ProgramSchema.post("findOneAndUpdate", function (document, next) {
     let operation = Object.keys(this._update)[0];
     let property = Object.keys(this._update[operation])[0];
+    if (operation == "$setOnInsert") {
+        return next();
+    }
     return mongoose_1.model("subject")
         .findByIdAndUpdate(this._update[operation][property], {
         [operation]: {

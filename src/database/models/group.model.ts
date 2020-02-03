@@ -43,6 +43,10 @@ GroupSchema.post("findOneAndUpdate", function(document: IGroup, next) {
   let operation = Object.keys(this._update)[0];
   let property = Object.keys(this._update[operation])[0];
 
+  if (operation == "$setOnInsert") {
+    return next();
+  }
+
   return model("user")
     .findByIdAndUpdate(this._update[operation][property], {
       [operation == "$push" ? "$set" : "$unset"]: {

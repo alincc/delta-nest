@@ -87,10 +87,15 @@ export class GradeControllerService {
   }
 
   public async updateOne(id: string, grade: IGrade): Promise<IResponse> {
-    const sanitizedGrade = _.omit(grade, ["student", "subject", "school"]);
+    const sanitizedGrade = _.omit(grade, [
+      "_id",
+      "student",
+      "subject",
+      "school"
+    ]);
 
     return this.gradeService
-      .updateCreateOne(id, sanitizedGrade)
+      .updateCreateOne(id, sanitizedGrade as IGrade)
       .then((document: any) => {
         document as IGrade;
         return {

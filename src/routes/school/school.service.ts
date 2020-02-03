@@ -67,6 +67,7 @@ export class SchoolControllerService {
 
   public async updateOne(id: string, school: ISchool): Promise<IResponse> {
     const sanitizedSchool = _.omit(school, [
+      "_id",
       "flights",
       "grades",
       "groups",
@@ -78,7 +79,7 @@ export class SchoolControllerService {
     ]);
 
     return this.schoolService
-      .updateCreateOne(id, sanitizedSchool)
+      .updateCreateOne(id, sanitizedSchool as ISchool)
       .then((document: any) => {
         document as ISchool;
         return {

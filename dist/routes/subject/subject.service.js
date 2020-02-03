@@ -78,9 +78,14 @@ let SubjectControllerService = class SubjectControllerService {
         });
     }
     async updateOne(id, subject) {
-        const sanitizedFlight = _.omit(subject, ["grades", "school", "programs"]);
+        const sanitizedSubject = _.omit(subject, [
+            "_id",
+            "grades",
+            "school",
+            "programs"
+        ]);
         return this.subjectService
-            .updateCreateOne(id, sanitizedFlight)
+            .updateCreateOne(id, sanitizedSubject)
             .then((document) => {
             document;
             return {

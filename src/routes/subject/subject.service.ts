@@ -75,10 +75,15 @@ export class SubjectControllerService {
   }
 
   public async updateOne(id: string, subject: ISubject): Promise<IResponse> {
-    const sanitizedFlight = _.omit(subject, ["grades", "school", "programs"]);
+    const sanitizedSubject = _.omit(subject, [
+      "_id",
+      "grades",
+      "school",
+      "programs"
+    ]);
 
     return this.subjectService
-      .updateCreateOne(id, sanitizedFlight)
+      .updateCreateOne(id, sanitizedSubject as ISubject)
       .then((document: any) => {
         document as ISubject;
         return {

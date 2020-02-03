@@ -89,7 +89,12 @@ let GradeControllerService = class GradeControllerService {
         });
     }
     async updateOne(id, grade) {
-        const sanitizedGrade = _.omit(grade, ["student", "subject", "school"]);
+        const sanitizedGrade = _.omit(grade, [
+            "_id",
+            "student",
+            "subject",
+            "school"
+        ]);
         return this.gradeService
             .updateCreateOne(id, sanitizedGrade)
             .then((document) => {

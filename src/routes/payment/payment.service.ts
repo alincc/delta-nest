@@ -74,10 +74,10 @@ export class PaymentControllerService {
   }
 
   public async updateOne(id: string, payment: IPayment): Promise<IResponse> {
-    const sanitizedPayment = _.omit(payment, ["student", "school"]);
+    const sanitizedPayment = _.omit(payment, ["_id", "student", "school"]);
 
     return this.paymentService
-      .updateCreateOne(id, sanitizedPayment)
+      .updateCreateOne(id, sanitizedPayment as IPayment)
       .then((document: any) => {
         document as IPayment;
         return {

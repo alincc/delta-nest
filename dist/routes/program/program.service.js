@@ -65,10 +65,10 @@ let ProgramControllerService = class ProgramControllerService {
             };
         });
     }
-    async updateOne(id, group) {
-        const sanitizedGroup = _.omit(group, ["school", "subjects"]);
+    async updateOne(id, program) {
+        const sanitizedProgram = _.omit(program, ["_id", "school", "subjects"]);
         return this.programService
-            .updateCreateOne(id, sanitizedGroup)
+            .updateCreateOne(id, sanitizedProgram)
             .then((document) => {
             document;
             return {

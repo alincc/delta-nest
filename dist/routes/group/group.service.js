@@ -64,7 +64,7 @@ let GroupControllerService = class GroupControllerService {
         });
     }
     async updateOne(id, group) {
-        const sanitizedGroup = _.omit(group, ["school", "members"]);
+        const sanitizedGroup = _.omit(group, ["_id", "school", "members"]);
         return this.groupService
             .updateCreateOne(id, sanitizedGroup)
             .then((document) => {

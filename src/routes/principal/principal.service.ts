@@ -73,6 +73,7 @@ export class PrincipalControllerService {
 
   public async updateOne(id: string, user: IUser): Promise<IResponse> {
     const sanitizedUser = _.omit(user, [
+      "_id",
       "role",
       "flights",
       "grades",
@@ -83,7 +84,7 @@ export class PrincipalControllerService {
     ]);
 
     return this.userService
-      .updateCreateOne(id, sanitizedUser)
+      .updateCreateOne(id, sanitizedUser as IUser)
       .then((document: any) => {
         document as IUser;
         return {

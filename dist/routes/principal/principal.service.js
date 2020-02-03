@@ -76,6 +76,7 @@ let PrincipalControllerService = class PrincipalControllerService {
     }
     async updateOne(id, user) {
         const sanitizedUser = _.omit(user, [
+            "_id",
             "role",
             "flights",
             "grades",

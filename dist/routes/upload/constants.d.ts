@@ -1,1 +1,1 @@
-export declare const SERVER_URL = "http://localhost:3000/";
+export declare const SERVER_URL = "https://delta-api.cuadrosoft.com/";

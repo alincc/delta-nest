@@ -1578,7 +1578,7 @@
         "signature": "2c5086cd8800bb72f6f19755b10910b9ea88b3976475f2b2492d1cedec937ba5"
       },
       "../src/routes/group/group.service.ts": {
-        "version": "8495976d6d5fc6df1ac4082b95ddcbb3237360a6c83c48be7d36a06fc5838a87",
+        "version": "87d30cc5ee212159b822ee1a1b4f4b9824bee9e3856e04a6853950d92c23e6fb",
         "signature": "70d14be1d05a985b3762ab60c065d841874651dac1ac5014051aa38571c695fb"
       },
       "../src/routes/group/group.controller.ts": {
@@ -1590,7 +1590,7 @@
         "signature": "a3fb5c5ed37cfde67b9a10b093177fe5f49f8e912b6487cc902c6a6e6eead7c1"
       },
       "../src/routes/student/student.service.ts": {
-        "version": "fb0157dd8a59c86e61a984e6df6075ef99f6248fc9b494b611b64f4432d15067",
+        "version": "fee951a29c459528a985c2ffea92257e1c012eb37e99234cf23d11b93c6c8b48",
         "signature": "eda61e5b9e952c4268458bcd7804fe9286a1e6204f9b0a7ec8d9987900b5fd28"
       },
       "../src/routes/student/student.controller.ts": {
@@ -1602,7 +1602,7 @@
         "signature": "1c96c46f4c97389adc49b95b3c8c8b21c1bbbfcd3a61f8071fbdbf9d51e15bce"
       },
       "../src/routes/principal/principal.service.ts": {
-        "version": "0c8d37643243c9f9297f79d3ed81d9e357c4d9b09ab098390f66ec6f930bab14",
+        "version": "f32e6e9a50d3325569ef430a01c696a08542bc3dd16a82b76686aa5e153e2bcf",
         "signature": "717434ec8795987fbb6ef281e102c4d5db9cb36c92c31be96aed83a85f1097a3"
       },
       "../src/routes/principal/principal.controller.ts": {
@@ -1630,7 +1630,7 @@
         "signature": "7e46f877bdd2672f1f5dcc95691d046380bb1b97ca1cbeff81b9b3b3a5e999c2"
       },
       "../src/routes/grade/grade.service.ts": {
-        "version": "13fef688aeadb29607dbc71a71937b60a015f6fdc4c75231377a7fc20107a887",
+        "version": "f933a83257cc46a1effec6bdc695dcf1c6232c3fcac30ac90cf1bb6398de6b07",
         "signature": "f9915d1e5cba7dbb139d3a45efaa7248676b014d1f9a3ea25cb98cfa380b208d"
       },
       "../src/dtos/receive-grade.dto.ts": {
@@ -1646,7 +1646,7 @@
         "signature": "937db9129aead806a992a1db89edccb114fa5541a289023244ba74c6575984f1"
       },
       "../src/routes/payment/payment.service.ts": {
-        "version": "621af2752febe642f6411b2ac9afe1f97cef5fcdffc4521b008eae155f333b76",
+        "version": "79c2bfc9c58ab00f93cf2f0522db044cffa111ad5951df701e1b973eae772146",
         "signature": "acdc3b35435a9675c5145697224c4415ef37acf948e2bc3d687f89c99b33129b"
       },
       "../src/dtos/receive-payment.dto.ts": {
@@ -1662,7 +1662,7 @@
         "signature": "1700474b35ff2b77850d138342e908104f4724ee0d3b17ea8d6d9ccc3d14dad5"
       },
       "../src/routes/school/school.service.ts": {
-        "version": "be449be4b546bb872cf166917b68f2ba6f80ab047c857c383171d184c149fa10",
+        "version": "3b75eacca6983c5a7c9f4ae6e6793c868d19df2710336d6cc23c841e342caf09",
         "signature": "d8a6461e50b49a022f65761999fd010318c60e1fea431df804120c8691191a95"
       },
       "../src/dtos/receive-school.dto.ts": {
@@ -1678,7 +1678,7 @@
         "signature": "c165a1fdd8f01cc9562a07543b8ab6384ff54cad9ef7c76b414ebd0192e2d376"
       },
       "../src/routes/subject/subject.service.ts": {
-        "version": "37db60ce42a4f9ab0308ac6f4bffaa1d9240a3208f08c92a0729b81786d1c83c",
+        "version": "f7389ec83f7112f6ea1cd22b183d674c7e76cf8c4e34ef7fdb464b094ffce584",
         "signature": "24b579b167ea341c98ade2df449227615ed4380acefcfef71a030562de837a65"
       },
       "../src/dtos/receive-subject.ts": {
@@ -1694,8 +1694,8 @@
         "signature": "afcf2dda642722b10351d51a2044ded7a0713c7c1b44d124b08176de1dacbfba"
       },
       "../src/routes/program/program.service.ts": {
-        "version": "e01e2a8876ef6f6319baf4534eae1c0ca8711d7aa5d70b3d8d405884cc98d0c1",
-        "signature": "d7c927c6278446d3f91e83a77db7e2b87006474616dd2e9ee2ba127b5ce38e03"
+        "version": "82d8b77c27e7804c91fdab2f09be4d5808d45d029a852dea5a730ce8f8b24e7f",
+        "signature": "68e26bc0b3a0e6752ceebf8ff37270b0b4acf41df0b4894dc213988c06d74ddf"
       },
       "../src/dtos/receive-program.dto.ts": {
         "version": "87a52ea23e121486db47ba83d11cd02dc2bf05a66491e6c8b93c2cad1ab679ff",
@@ -1774,8 +1774,8 @@
         "signature": "e3cd60be3c4f95c43420be67eaa21637585b7c1a8129f9b39983bbd294f9513c"
       },
       "../src/routes/upload/constants.ts": {
-        "version": "c368ddd80dc866db2c9afd11298a35963b65fab832cc6d73ec85e15d49f9e82f",
-        "signature": "6f33c32c5417c3193d5cc6ecbbd298049e7d11c6051102a0384effb7c4ab5e75"
+        "version": "eb9ae06161adff46df2a22500c4296c1d8067e35e52d2f857cd863b97250b46d",
+        "signature": "296737ff1b60579357e308b5988ad35458b5c12a233755181d997dae8430d2b3"
       },
       "../src/routes/upload/upload.service.ts": {
         "version": "7fb5c6246b9d2534e14ffd730d16712209a69c4e190affc2336a0ee132281ffc",
@@ -10157,6 +10157,7 @@
       "../node_modules/@types/connect/index.d.ts",
       "../node_modules/@types/body-parser/index.d.ts",
       "../node_modules/@types/express/index.d.ts",
+      "../src/auth/auth.controller.ts",
       "../node_modules/@types/passport/index.d.ts",
       "../node_modules/@types/passport-strategy/index.d.ts",
       "../node_modules/@types/passport-jwt/index.d.ts",
@@ -10252,9 +10253,7 @@
       "../node_modules/@nestjs/platform-express/multer/multer.module.d.ts",
       "../node_modules/@nestjs/platform-express/multer/index.d.ts",
       "../node_modules/@nestjs/platform-express/index.d.ts",
-      "../src/routes/upload/constants.ts",
       "../src/routes/upload/upload.service.ts",
-      "../src/routes/upload/upload.controller.ts",
       "../src/routes/upload/upload.module.ts",
       "../src/routes/maintenance/maintenance.service.ts",
       "../src/routes/maintenance/maintenance.controller.ts",
@@ -10297,7 +10296,8 @@
       "../node_modules/@types/webpack/index.d.ts",
       "../node_modules/@types/yargs-parser/index.d.ts",
       "../node_modules/@types/yargs/index.d.ts",
-      "../src/auth/auth.controller.ts"
+      "../src/routes/upload/constants.ts",
+      "../src/routes/upload/upload.controller.ts"
     ]
   },
   "version": "3.7.4"

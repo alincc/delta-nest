@@ -8,7 +8,7 @@ export declare class ProgramControllerService {
     findAllInSchool(schoolId: string): Promise<IResponse>;
     findById(id: string): Promise<IResponse>;
     createOne(group: IProgram): Promise<IResponse>;
-    updateOne(id: string, group: IProgram): Promise<IResponse>;
+    updateOne(id: string, program: IProgram): Promise<IResponse>;
     addSubject(id: string, subjectId: string): Promise<IResponse>;
     removeSubject(id: string, subjectId: string): Promise<IResponse>;
     deleteOne(id: string): Promise<IResponse>;

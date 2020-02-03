@@ -78,7 +78,7 @@ let PaymentControllerService = class PaymentControllerService {
         });
     }
     async updateOne(id, payment) {
-        const sanitizedPayment = _.omit(payment, ["student", "school"]);
+        const sanitizedPayment = _.omit(payment, ["_id", "student", "school"]);
         return this.paymentService
             .updateCreateOne(id, sanitizedPayment)
             .then((document) => {

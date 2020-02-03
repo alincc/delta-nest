@@ -69,6 +69,7 @@ let SchoolControllerService = class SchoolControllerService {
     }
     async updateOne(id, school) {
         const sanitizedSchool = _.omit(school, [
+            "_id",
             "flights",
             "grades",
             "groups",

@@ -69,11 +69,11 @@ export class ProgramControllerService {
   ////////////////////////////////////////
   //          UPDATE FUNCTIONS
   ////////////////////////////////////////
-  public async updateOne(id: string, group: IProgram): Promise<IResponse> {
-    const sanitizedGroup = _.omit(group, ["school", "subjects"]);
+  public async updateOne(id: string, program: IProgram): Promise<IResponse> {
+    const sanitizedProgram = _.omit(program, ["_id", "school", "subjects"]);
 
     return this.programService
-      .updateCreateOne(id, sanitizedGroup)
+      .updateCreateOne(id, sanitizedProgram as IProgram)
       .then((document: any) => {
         document as IProgram;
         return {

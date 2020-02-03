@@ -60,10 +60,10 @@ export class GroupControllerService {
   }
 
   public async updateOne(id: string, group: IGroup): Promise<IResponse> {
-    const sanitizedGroup = _.omit(group, ["school", "members"]);
+    const sanitizedGroup = _.omit(group, ["_id", "school", "members"]);
 
     return this.groupService
-      .updateCreateOne(id, sanitizedGroup)
+      .updateCreateOne(id, sanitizedGroup as IGroup)
       .then((document: any) => {
         document as IGroup;
         return {

@@ -9,6 +9,7 @@ async function bootstrap() {
     logger: false,
     cors: {
       origin: "*",
+      preflightContinue: true,
       allowedHeaders: [
         "Content-Type",
         "Accept",
@@ -21,8 +22,6 @@ async function bootstrap() {
     }
   });
 
-  app.useGlobalPipes(new ValidationPipe());
-
   app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
@@ -32,6 +31,8 @@ async function bootstrap() {
     );
     next();
   });
+
+  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(3000);
   console.log("app is running on port 3000");

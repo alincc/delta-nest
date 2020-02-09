@@ -8,8 +8,15 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: false,
     cors: {
-      origin: true,
-      allowedHeaders: ["Content-Type", "Accept", "Authorization"],
+      origin: "*",
+      allowedHeaders: [
+        "Content-Type",
+        "Accept",
+        "Authorization",
+        "Access-Control-Allow-Origin",
+        "origin",
+        "Access-Control-Allow-Methods"
+      ],
       optionsSuccessStatus: 200
     }
   });

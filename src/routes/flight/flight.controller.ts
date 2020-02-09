@@ -139,7 +139,7 @@ export class FlightController {
   //          GET PARENT FUNCTIONS
   ////////////////////////////////////////
 
-  @Roles("PRINCIPAL_ROLE")
+  @Roles("PRINCIPAL_ROLE", "STUDENT_ROLE")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Get("school/:id")
   async findAllInSchool(@Param() param, @Res() response: Response) {

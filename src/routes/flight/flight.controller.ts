@@ -192,6 +192,9 @@ export class FlightController {
       .then(() => {
         return this.flightControllerService.addRecruit(id, studentId);
       })
+      .then((success: IResponse) => {
+        return response.status(201).json(success);
+      })
       .catch(error => {
         return response.status(400).json({
           status: HttpStatus.BAD_REQUEST,
